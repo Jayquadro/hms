@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "@anthropic-ai/claude-code": "^2.0.76",
-    "all": "^0.0.0"
+    "@anthropic-ai/claude-code": "^2.0.76"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
@@ -13,3 +12,4 @@
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
   }
 }
+
