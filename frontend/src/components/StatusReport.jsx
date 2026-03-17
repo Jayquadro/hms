@@ -184,16 +184,26 @@ const StatusReport = ({ projectId, onClose }) => {
 
               {/* Team nel frontespizio - R&D a sinistra, altri a destra */}
               {teamContacts.length > 0 && (() => {
-                const leaderNames = [project.rd_lead, project.automation_lead].filter(Boolean).map(n => n?.toLowerCase());
-                const sortByLeader = (a, b) => {
-                  const aL = leaderNames.includes(a.name?.toLowerCase());
-                  const bL = leaderNames.includes(b.name?.toLowerCase());
-                  if (aL && !bL) return -1;
-                  if (!aL && bL) return 1;
-                  return 0;
-                };
-                const rdContacts = teamContacts.filter(c => c.department === 'R&D').sort(sortByLeader);
-                const otherContacts = teamContacts.filter(c => c.department !== 'R&D').sort(sortByLeader);
+                const rdLeadName = project.rd_lead?.toLowerCase();
+                const automationLeadName = project.automation_lead?.toLowerCase();
+                const rdContacts = teamContacts
+                  .filter(c => c.department === 'R&D')
+                  .sort((a, b) => {
+                    const aIsLead = a.name?.toLowerCase() === rdLeadName;
+                    const bIsLead = b.name?.toLowerCase() === rdLeadName;
+                    if (aIsLead && !bIsLead) return -1;
+                    if (!aIsLead && bIsLead) return 1;
+                    return 0;
+                  });
+                const otherContacts = teamContacts
+                  .filter(c => c.department !== 'R&D')
+                  .sort((a, b) => {
+                    const aIsLead = a.name?.toLowerCase() === automationLeadName;
+                    const bIsLead = b.name?.toLowerCase() === automationLeadName;
+                    if (aIsLead && !bIsLead) return -1;
+                    if (!aIsLead && bIsLead) return 1;
+                    return 0;
+                  });
                 const renderCoverTable = (contacts) => (
                   <table className="w-full text-xs border border-slate-300 mt-1">
                     <thead className="bg-slate-100">
@@ -231,6 +241,19 @@ const StatusReport = ({ projectId, onClose }) => {
                   </div>
                 );
               })()}
+
+            {/* Funzioni progettate e collaudate nel frontespizio */}
+            {project.funzioni_progettate && (
+              <div className="mt-4 w-full text-left">
+                <div className="w-full h-0.5 bg-slate-200 mb-3"></div>
+                <p className="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-2">Funzioni progettate e collaudate</p>
+                <div
+                  className="text-xs text-slate-700 leading-relaxed ql-editor-readonly"
+                  dangerouslySetInnerHTML={{ __html: project.funzioni_progettate }}
+                />
+              </div>
+            )}
+
             {/* TOC nel frontespizio */}
             <div className="mt-5 w-full text-left">
               <div className="w-full h-0.5 bg-slate-200 mb-2"></div>
@@ -302,7 +325,7 @@ const StatusReport = ({ projectId, onClose }) => {
                           {project.handover_id || 'N/D'}
                         </div>
                       </div>
-                      <div className="flex-shrink-0">
+                      <div className="flex-shrink-0 print:hidden">
                         <label className="block text-xs font-medium text-slate-600 mb-0.5">Stato</label>
                         <div className="px-2 py-1.5">
                           <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${getStatusColor(project.status)}`}>
@@ -311,7 +334,7 @@ const StatusReport = ({ projectId, onClose }) => {
                         </div>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-2 print:hidden">
                       <div>
                         <label className="block text-xs font-medium text-slate-600 mb-0.5">Fase Corrente</label>
                         <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
@@ -1348,9 +1371,17 @@ const StatusReport = ({ projectId, onClose }) => {
             display: table-header-group;
           }
 
+          /* Quill content in frontispiece */
+          .ql-editor-readonly p { margin: 0 0 2px 0; }
+          .ql-editor-readonly ul { list-style: disc; padding-left: 1.2em; margin: 2px 0; }
+          .ql-editor-readonly ol { list-style: decimal; padding-left: 1.2em; margin: 2px 0; }
+          .ql-editor-readonly li { margin: 1px 0; }
+          .ql-editor-readonly strong { font-weight: 700; }
+          .ql-editor-readonly em { font-style: italic; }
+
           /* Better page margins */
           @page {
-            margin: 1.5cm 2.5cm;
+            margin: 1.5cm 3.5cm;
           }
         }
       `}} />
