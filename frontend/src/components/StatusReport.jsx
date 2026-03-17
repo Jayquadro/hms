@@ -211,7 +211,6 @@ const StatusReport = ({ projectId, onClose }) => {
                         <th className="px-2 py-1 text-left font-semibold text-slate-600">Reparto</th>
                         <th className="px-2 py-1 text-left font-semibold text-slate-600">Ruolo</th>
                         <th className="px-2 py-1 text-left font-semibold text-slate-600">Nome</th>
-                        <th className="px-2 py-1 text-left font-semibold text-slate-600">Email</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -220,7 +219,6 @@ const StatusReport = ({ projectId, onClose }) => {
                           <td className="px-2 py-1 text-slate-700">{c.department}</td>
                           <td className="px-2 py-1 text-slate-700">{c.role}</td>
                           <td className="px-2 py-1 font-medium text-slate-800">{c.name}</td>
-                          <td className="px-2 py-1 text-slate-600">{c.email}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1378,6 +1376,26 @@ const StatusReport = ({ projectId, onClose }) => {
           .ql-editor-readonly li { margin: 1px 0; }
           .ql-editor-readonly strong { font-weight: 700; }
           .ql-editor-readonly em { font-style: italic; }
+
+          /* Larger base font for print */
+          .report-content {
+            font-size: 14pt !important;
+          }
+          .report-content p,
+          .report-content td,
+          .report-content th,
+          .report-content li,
+          .report-content label,
+          .report-content span {
+            font-size: inherit;
+          }
+          .report-content .text-xs {
+            font-size: 11pt !important;
+          }
+          .report-content h1 { font-size: 32pt !important; }
+          .report-content h2 { font-size: 22pt !important; }
+          .report-content h3 { font-size: 16pt !important; }
+          .report-content h4 { font-size: 14pt !important; }
 
           /* Better page margins */
           @page {
