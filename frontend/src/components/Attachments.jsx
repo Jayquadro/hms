@@ -179,15 +179,15 @@ const Attachments = ({ projectId }) => {
                 <Trash2 className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-secondary-900">Eliminare l'allegato?</h3>
-                <p className="text-sm text-secondary-500">Questa azione non può essere annullata</p>
+                <h3 className="font-semibold text-secondary-900">Eliminare l'allegato?</h3>
+                <p className="text-secondary-500">Questa azione non può essere annullata</p>
               </div>
             </div>
 
             <div className="bg-gray-50 rounded p-4 mb-4">
-              <p className="text-sm text-secondary-700 mb-2">Stai per eliminare:</p>
+              <p className="text-secondary-700 mb-2">Stai per eliminare:</p>
               <p className="font-semibold text-secondary-900">{attachmentToDelete?.original_name}</p>
-              <p className="text-sm text-secondary-600 mt-1">
+              <p className="text-secondary-600 mt-1">
                 {attachmentToDelete?.file_size && formatFileSize(attachmentToDelete.file_size)}
               </p>
             </div>
@@ -216,13 +216,13 @@ const Attachments = ({ projectId }) => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-base font-bold text-secondary-900">Allegati</h1>
-            <p className="text-sm text-secondary-600 mt-1">
+            <p className="text-secondary-600 mt-1">
               Carica e gestisci documenti e file del progetto
             </p>
           </div>
           <div className="flex items-center gap-2">
             <Paperclip className="w-5 h-5 text-blue-600" />
-            <span className="text-sm font-medium text-secondary-600">
+            <span className="font-medium text-secondary-600">
               {attachments.length} file{attachments.length !== 1 ? 's' : ''}
             </span>
           </div>
@@ -243,10 +243,10 @@ const Attachments = ({ projectId }) => {
       >
         <div className="text-center">
           <Upload className={`w-12 h-12 mx-auto mb-4 ${dragActive ? 'text-blue-600' : 'text-gray-400'}`} />
-          <h3 className="text-sm font-semibold text-secondary-900 mb-2">
+          <h3 className="font-semibold text-secondary-900 mb-2">
             {uploading ? 'Caricamento in corso...' : 'Carica file'}
           </h3>
-          <p className="text-sm text-secondary-600 mb-4">
+          <p className="text-secondary-600 mb-4">
             Trascina i file qui, o clicca per sfogliare
           </p>
           <label className="inline-block">
@@ -272,7 +272,7 @@ const Attachments = ({ projectId }) => {
       {attachments.length === 0 ? (
         <div className="bg-white rounded shadow-sm border border-gray-200 p-12 text-center">
           <Paperclip className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-sm font-semibold text-secondary-600 mb-2">Nessun allegato presente</h3>
+          <h3 className="font-semibold text-secondary-600 mb-2">Nessun allegato presente</h3>
           <p className="text-secondary-500">
             Carica documenti, immagini o qualsiasi file relativo a questo progetto
           </p>
@@ -294,7 +294,7 @@ const Attachments = ({ projectId }) => {
                       <h4 className="font-medium text-secondary-900 truncate">
                         {attachment.original_name}
                       </h4>
-                      <div className="flex items-center gap-4 mt-1 text-sm text-secondary-500">
+                      <div className="flex items-center gap-4 mt-1 text-secondary-500">
                         <span>{formatFileSize(attachment.file_size || 0)}</span>
                         <span>
                           {new Date(attachment.uploaded_at).toLocaleDateString('en-GB', {
@@ -327,7 +327,7 @@ const Attachments = ({ projectId }) => {
                   </div>
                 </div>
                 {attachment.description && (
-                  <p className="mt-2 text-sm text-secondary-600 ml-16">
+                  <p className="mt-2 text-secondary-600 ml-16">
                     {attachment.description}
                   </p>
                 )}

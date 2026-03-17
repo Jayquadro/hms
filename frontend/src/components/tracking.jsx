@@ -131,7 +131,7 @@ const Tracking = ({ projectId }) => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-secondary-900">Cronologia del progetto</h2>
-            <div className="flex items-center gap-2 text-sm text-secondary-600">
+            <div className="flex items-center gap-2 text-secondary-600">
               <Clock className="w-4 h-4" />
               <span>{timeline.remainingDays} giorni rimanenti</span>
             </div>
@@ -139,19 +139,19 @@ const Tracking = ({ projectId }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div className="bg-blue-50 rounded-lg p-4">
-              <div className="text-sm text-secondary-600 mb-1">Data inizio</div>
+              <div className="text-secondary-600 mb-1">Data inizio</div>
               <div className="text-lg font-semibold text-secondary-900">
                 {timeline.start.toLocaleDateString()}
               </div>
             </div>
             <div className="bg-purple-50 rounded-lg p-4">
-              <div className="text-sm text-secondary-600 mb-1">Data obiettivo</div>
+              <div className="text-secondary-600 mb-1">Data obiettivo</div>
               <div className="text-lg font-semibold text-secondary-900">
                 {timeline.end.toLocaleDateString()}
               </div>
             </div>
             <div className="bg-green-50 rounded-lg p-4">
-              <div className="text-sm text-secondary-600 mb-1">Durata totale</div>
+              <div className="text-secondary-600 mb-1">Durata totale</div>
               <div className="text-lg font-semibold text-secondary-900">
                 {timeline.totalDays} giorni
               </div>
@@ -160,7 +160,7 @@ const Tracking = ({ projectId }) => {
 
           {/* Time Progress Bar */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between">
               <span className="text-secondary-600">Avanzamento temporale</span>
               <span className="font-semibold text-blue-600">{timeline.timeProgress}%</span>
             </div>
@@ -178,7 +178,7 @@ const Tracking = ({ projectId }) => {
 
           {/* Work Progress vs Time Progress */}
           <div className="mt-4 pt-4 border-t border-gray-200">
-            <div className="flex items-center justify-between text-sm mb-2">
+            <div className="flex items-center justify-between mb-2">
               <span className="text-secondary-600">Avanzamento lavori</span>
               <span className="font-semibold text-green-600">{overallProgress}%</span>
             </div>
@@ -197,14 +197,14 @@ const Tracking = ({ projectId }) => {
                 {overallProgress >= timeline.timeProgress ? (
                   <>
                     <CheckCircle className="w-5 h-5 text-green-600" />
-                    <span className="text-sm font-medium text-green-800">
+                    <span className="font-medium text-green-800">
                       In linea - L'avanzamento è in anticipo sul programma
                     </span>
                   </>
                 ) : (
                   <>
                     <AlertCircle className="w-5 h-5 text-yellow-600" />
-                    <span className="text-sm font-medium text-yellow-800">
+                    <span className="font-medium text-yellow-800">
                       In ritardo - L'avanzamento è del {timeline.timeProgress - overallProgress}% indietro rispetto al programma
                     </span>
                   </>
@@ -222,7 +222,7 @@ const Tracking = ({ projectId }) => {
           <div className="flex gap-2">
             <button
               onClick={() => setGanttView('phase')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 ganttView === 'phase'
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-secondary-600 hover:bg-gray-200'
@@ -232,7 +232,7 @@ const Tracking = ({ projectId }) => {
             </button>
             <button
               onClick={() => setGanttView('category')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 ganttView === 'category'
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-secondary-600 hover:bg-gray-200'
@@ -262,10 +262,10 @@ const Tracking = ({ projectId }) => {
                       <h3 className="font-semibold text-secondary-900">{phase.name}</h3>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="text-sm text-secondary-600">
+                      <span className="text-secondary-600">
                         {phaseItems.filter(i => i.status === 'Complete').length}/{phaseItems.length} attività
                       </span>
-                      <span className="text-sm font-semibold text-blue-600">{progress}%</span>
+                      <span className="font-semibold text-blue-600">{progress}%</span>
                     </div>
                   </div>
 
@@ -339,7 +339,7 @@ const Tracking = ({ projectId }) => {
                       return (
                         <div key={category} className="border border-gray-200 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
-                            <h4 className="text-sm font-medium text-secondary-900">{category}</h4>
+                            <h4 className="font-medium text-secondary-900">{category}</h4>
                             <div className="flex items-center gap-3">
                               <span className="text-xs text-secondary-600">
                                 {categoryItems.filter(i => i.status === 'Complete').length}/{categoryItems.length}
@@ -379,7 +379,7 @@ const Tracking = ({ projectId }) => {
               <div key={phase.id} className="flex items-start gap-4">
                 {/* Timeline Dot */}
                 <div className="flex flex-col items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm ${
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
                     isComplete ? 'bg-green-500 text-white' :
                     isInProgress ? 'bg-blue-500 text-white' :
                     'bg-gray-300 text-secondary-600'
@@ -406,7 +406,7 @@ const Tracking = ({ projectId }) => {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-4 text-sm text-secondary-600">
+                  <div className="flex items-center gap-4 text-secondary-600">
                     <span>{progress}% completato</span>
                     <span>•</span>
                     <span>

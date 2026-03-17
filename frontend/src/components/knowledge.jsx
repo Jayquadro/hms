@@ -522,7 +522,7 @@ const Knowledge = ({ projectId }) => {
                 {daySessions.map((session, idx) => (
                   <div key={session.id} className={`${idx > 0 ? 'pt-2 border-t border-secondary-200' : ''}`}>
                     <div className="flex items-start justify-between gap-2 mb-1">
-                      <div className="font-semibold text-sm text-secondary-900 flex-1">
+                      <div className="font-semibold text-secondary-900 flex-1">
                         {session.session_topic}
                       </div>
                       <button
@@ -575,7 +575,7 @@ const Knowledge = ({ projectId }) => {
     return (
       <div className="bg-white border border-secondary-200 rounded p-3">
         <div className="text-center mb-2">
-          <div className="text-sm font-bold text-secondary-900">{monthNames[month]}</div>
+          <div className="font-bold text-secondary-900">{monthNames[month]}</div>
           <div className="text-xs text-secondary-500">{year}</div>
         </div>
         <div className="grid grid-cols-7 gap-1 mb-1">
@@ -688,7 +688,7 @@ const Knowledge = ({ projectId }) => {
 
         {/* Sessions Summary */}
         <div className="mt-6 pt-4 border-t border-secondary-200">
-          <div className="text-sm font-semibold text-secondary-900 mb-2">
+          <div className="font-semibold text-secondary-900 mb-2">
             Riepilogo rapido
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -728,7 +728,7 @@ const Knowledge = ({ projectId }) => {
     return (
       <div className="bg-white rounded shadow-sm border border-gray-200 p-6 group">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-secondary-900">Tutte le sessioni</h2>
+          <h2 className="font-semibold text-secondary-900">Tutte le sessioni</h2>
           <div className="flex items-center gap-2">
             {/* View Toggle - Always Visible */}
             <div className="flex items-center gap-1">
@@ -768,8 +768,8 @@ const Knowledge = ({ projectId }) => {
         {sortedSessions.length === 0 ? (
           <div className="text-center py-12 text-secondary-500">
             <BookOpen className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-            <p className="text-sm font-medium">Nessuna sessione di trasferimento know-how pianificata</p>
-            <p className="text-sm mt-2">Clicca "Aggiungi sessione" per pianificare la tua prima sessione di trasferimento know-how</p>
+            <p className="font-medium">Nessuna sessione di trasferimento know-how pianificata</p>
+            <p className="mt-2">Clicca "Aggiungi sessione" per pianificare la tua prima sessione di trasferimento know-how</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -783,8 +783,8 @@ const Knowledge = ({ projectId }) => {
                     <div className="flex items-start gap-3 mb-3">
                       <BookOpen className="w-5 h-5 text-blue-600 mt-0.5" />
                       <div className="flex-1">
-                        <h3 className="font-semibold text-secondary-900 text-sm">{session.session_topic}</h3>
-                        <div className="flex items-center gap-4 mt-2 text-sm text-secondary-600">
+                        <h3 className="font-semibold text-secondary-900">{session.session_topic}</h3>
+                        <div className="flex items-center gap-4 mt-2 text-secondary-600">
                           <span className="flex items-center gap-1">
                             <Calendar className="w-4 h-4" />
                             {new Date(session.scheduled_date).toLocaleDateString()}
@@ -824,7 +824,7 @@ const Knowledge = ({ projectId }) => {
                     </div>
 
                     {session.notes && (
-                      <p className="mt-3 text-sm text-secondary-600 bg-gray-50 p-3 rounded">
+                      <p className="mt-3 text-secondary-600 bg-gray-50 p-3 rounded">
                         {session.notes}
                       </p>
                     )}
@@ -889,7 +889,7 @@ const Knowledge = ({ projectId }) => {
                     <Calendar className="w-4 h-4 text-blue-600" />
                     <h3 className="text-xs font-semibold text-secondary-600 uppercase tracking-wide">Prossimo evento</h3>
                   </div>
-                  <h2 className="text-sm font-bold text-secondary-900 mb-2">{nextSession.session_topic}</h2>
+                  <h2 className="font-bold text-secondary-900 mb-2">{nextSession.session_topic}</h2>
 
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-secondary-700">
                     <div className="flex items-center gap-1">
@@ -959,7 +959,7 @@ const Knowledge = ({ projectId }) => {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-secondary-700" />
-                <h3 className="text-sm font-semibold text-secondary-900">Avanzamento trasferimento know-how</h3>
+                <h3 className="font-semibold text-secondary-900">Avanzamento trasferimento know-how</h3>
               </div>
               <div className="flex items-center gap-2 text-xs text-secondary-600">
                 <span className="font-semibold text-success-600">
@@ -1003,19 +1003,19 @@ const Knowledge = ({ projectId }) => {
               <div className="flex justify-between items-center mt-8 text-xs">
                 <div className="text-left">
                   <div className="text-secondary-500 font-medium">Non iniziate</div>
-                  <div className="text-sm font-semibold text-secondary-900">
+                  <div className="font-semibold text-secondary-900">
                     {sessions.filter(s => s.status === 'Scheduled').length} sessioni
                   </div>
                 </div>
                 <div className="text-center bg-success-50 px-3 py-1 rounded">
                   <div className="text-secondary-500 font-medium">Completamento</div>
-                  <div className="text-sm font-semibold text-success-600">
+                  <div className="font-semibold text-success-600">
                     {progressPercentage}%
                   </div>
                 </div>
                 <div className="text-right">
                   <div className="text-secondary-500 font-medium">Completate</div>
-                  <div className="text-sm font-semibold text-success-600">
+                  <div className="font-semibold text-success-600">
                     {completedSessions} sessioni
                   </div>
                 </div>
@@ -1058,7 +1058,7 @@ const Knowledge = ({ projectId }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded shadow-xl max-w-2xl w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-secondary-900">Aggiungi nuova sessione</h3>
+              <h3 className="font-semibold text-secondary-900">Aggiungi nuova sessione</h3>
               <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-secondary-600">
                 <X className="w-5 h-5" />
               </button>
@@ -1066,7 +1066,7 @@ const Knowledge = ({ projectId }) => {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   Argomento <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -1080,7 +1080,7 @@ const Knowledge = ({ projectId }) => {
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-secondary-700 mb-1">
+                  <label className="block font-medium text-secondary-700 mb-1">
                     Data pianificata <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -1091,7 +1091,7 @@ const Knowledge = ({ projectId }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-secondary-700 mb-1">Orario</label>
+                  <label className="block font-medium text-secondary-700 mb-1">Orario</label>
                   <input
                     type="time"
                     value={newSession.start_time}
@@ -1100,7 +1100,7 @@ const Knowledge = ({ projectId }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-secondary-700 mb-1">Durata</label>
+                  <label className="block font-medium text-secondary-700 mb-1">Durata</label>
                   <input
                     type="text"
                     value={newSession.duration}
@@ -1112,7 +1112,7 @@ const Knowledge = ({ projectId }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-2">Partecipanti</label>
+                <label className="block font-medium text-secondary-700 mb-2">Partecipanti</label>
 
                 {/* Team Members */}
                 {teamContacts.length > 0 && (
@@ -1148,13 +1148,13 @@ const Knowledge = ({ projectId }) => {
                       value={customAttendee}
                       onChange={(e) => setCustomAttendee(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && addCustomAttendee()}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Inserisci nome e premi Aggiungi"
                     />
                     <button
                       type="button"
                       onClick={addCustomAttendee}
-                      className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-secondary-700 rounded-md transition-colors text-sm font-medium"
+                      className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-secondary-700 rounded-md transition-colors font-medium"
                     >
                       <Plus className="w-4 h-4" />
                     </button>
@@ -1169,7 +1169,7 @@ const Knowledge = ({ projectId }) => {
                       {selectedAttendees.map((attendee, index) => (
                         <span
                           key={index}
-                          className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                          className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full"
                         >
                           {attendee}
                           <button
@@ -1186,7 +1186,7 @@ const Knowledge = ({ projectId }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">Note</label>
+                <label className="block font-medium text-secondary-700 mb-1">Note</label>
                 <textarea
                   value={newSession.notes}
                   onChange={(e) => setNewSession({ ...newSession, notes: e.target.value })}
@@ -1220,7 +1220,7 @@ const Knowledge = ({ projectId }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded shadow-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-secondary-900">Modifica sessione</h3>
+              <h3 className="font-semibold text-secondary-900">Modifica sessione</h3>
               <button onClick={() => setShowEditModal(false)} className="text-gray-400 hover:text-secondary-600">
                 <X className="w-5 h-5" />
               </button>
@@ -1228,7 +1228,7 @@ const Knowledge = ({ projectId }) => {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   Argomento <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -1242,7 +1242,7 @@ const Knowledge = ({ projectId }) => {
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-secondary-700 mb-1">
+                  <label className="block font-medium text-secondary-700 mb-1">
                     Data pianificata <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -1253,7 +1253,7 @@ const Knowledge = ({ projectId }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-secondary-700 mb-1">Orario</label>
+                  <label className="block font-medium text-secondary-700 mb-1">Orario</label>
                   <input
                     type="time"
                     value={editingSession.start_time || ''}
@@ -1262,7 +1262,7 @@ const Knowledge = ({ projectId }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-secondary-700 mb-1">Durata</label>
+                  <label className="block font-medium text-secondary-700 mb-1">Durata</label>
                   <input
                     type="text"
                     value={editingSession.duration || ''}
@@ -1274,7 +1274,7 @@ const Knowledge = ({ projectId }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-2">Partecipanti</label>
+                <label className="block font-medium text-secondary-700 mb-2">Partecipanti</label>
 
                 {/* Team Members */}
                 {teamContacts.length > 0 && (
@@ -1310,13 +1310,13 @@ const Knowledge = ({ projectId }) => {
                       value={editCustomAttendee}
                       onChange={(e) => setEditCustomAttendee(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && addEditCustomAttendee()}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Inserisci nome e premi Aggiungi"
                     />
                     <button
                       type="button"
                       onClick={addEditCustomAttendee}
-                      className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-secondary-700 rounded-md transition-colors text-sm font-medium"
+                      className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-secondary-700 rounded-md transition-colors font-medium"
                     >
                       <Plus className="w-4 h-4" />
                     </button>
@@ -1331,7 +1331,7 @@ const Knowledge = ({ projectId }) => {
                       {editSelectedAttendees.map((attendee, index) => (
                         <span
                           key={index}
-                          className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                          className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full"
                         >
                           {attendee}
                           <button
@@ -1348,7 +1348,7 @@ const Knowledge = ({ projectId }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">Stato</label>
+                <label className="block font-medium text-secondary-700 mb-1">Stato</label>
                 <select
                   value={editingSession.status}
                   onChange={(e) => setEditingSession({ ...editingSession, status: e.target.value })}
@@ -1362,7 +1362,7 @@ const Knowledge = ({ projectId }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-2">
+                <label className="block font-medium text-secondary-700 mb-2">
                   Valutazione efficacia
                 </label>
                 <div className="flex items-center gap-2">
@@ -1384,7 +1384,7 @@ const Knowledge = ({ projectId }) => {
                   {editingSession.effectiveness_rating && (
                     <button
                       onClick={() => setEditingSession({ ...editingSession, effectiveness_rating: null })}
-                      className="ml-2 text-sm text-secondary-500 hover:text-secondary-700"
+                      className="ml-2 text-secondary-500 hover:text-secondary-700"
                     >
                       Rimuovi
                     </button>
@@ -1393,7 +1393,7 @@ const Knowledge = ({ projectId }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">Note</label>
+                <label className="block font-medium text-secondary-700 mb-1">Note</label>
                 <textarea
                   value={editingSession.notes || ''}
                   onChange={(e) => setEditingSession({ ...editingSession, notes: e.target.value })}
@@ -1444,15 +1444,15 @@ const Knowledge = ({ projectId }) => {
                 <Trash2 className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-secondary-900">Eliminare la sessione?</h3>
-                <p className="text-sm text-secondary-500">Questa azione non può essere annullata</p>
+                <h3 className="font-semibold text-secondary-900">Eliminare la sessione?</h3>
+                <p className="text-secondary-500">Questa azione non può essere annullata</p>
               </div>
             </div>
 
             <div className="bg-gray-50 rounded p-4 mb-4">
-              <p className="text-sm text-secondary-700 mb-2">Stai per eliminare:</p>
+              <p className="text-secondary-700 mb-2">Stai per eliminare:</p>
               <p className="font-semibold text-secondary-900">{sessionToDelete.session_topic}</p>
-              <p className="text-sm text-secondary-600">
+              <p className="text-secondary-600">
                 {new Date(sessionToDelete.scheduled_date).toLocaleDateString()}
               </p>
             </div>

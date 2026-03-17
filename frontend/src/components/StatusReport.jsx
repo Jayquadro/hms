@@ -150,7 +150,7 @@ const StatusReport = ({ projectId, onClose }) => {
             {/* Document Type */}
               <div className="mb-4">
                 <div className="inline-block px-6 py-2 border-2 border-slate-300 rounded-lg">
-                  <p className="text-sm uppercase tracking-widest text-slate-600 font-semibold">
+                  <p className="uppercase tracking-widest text-slate-600 font-semibold">
                     Handover Management System
                   </p>
                 </div>
@@ -172,12 +172,12 @@ const StatusReport = ({ projectId, onClose }) => {
               {/* Metadata */}
               <div className="space-y-2 text-slate-700">
                 <div>
-                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">ID Progetto</p>
+                  <p className="uppercase tracking-wide text-slate-500 mb-1">ID Progetto</p>
                   <p className="text-lg font-semibold">{project.handover_id || 'N/D'}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">Date Rilascio</p>
+                  <p className="uppercase tracking-wide text-slate-500 mb-1">Date Rilascio</p>
                   <p className="text-lg font-semibold">{formatDate(project.start_date)} — {formatDate(project.target_date)}</p>
                 </div>
               </div>
@@ -258,7 +258,7 @@ const StatusReport = ({ projectId, onClose }) => {
             <div className="mt-5 w-full text-left">
               <div className="w-full h-0.5 bg-slate-200 mb-2"></div>
               <p className="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-2">Indice</p>
-              <div className="flex flex-col gap-0 text-sm">
+              <div className="flex flex-col gap-0">
                 <div className="flex items-center py-0.5 border-b border-dotted border-slate-300">
                   <span className="font-medium text-slate-700">1. Riepilogo Progetto</span>
                 </div>
@@ -308,20 +308,20 @@ const StatusReport = ({ projectId, onClose }) => {
               <div className="space-y-4">
                 {/* Project Information */}
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                  <h4 className="font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
                     Informazioni Progetto
                   </h4>
                   <div className="space-y-2">
                     <div className="flex flex-col md:flex-row gap-2">
                       <div className="flex-1">
                         <label className="block text-xs font-medium text-slate-600 mb-0.5">Nome Progetto</label>
-                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm font-semibold text-slate-900">
+                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded font-semibold text-slate-900">
                           {project.project_name || 'N/D'}
                         </div>
                       </div>
                       <div className="flex-shrink-0">
                         <label className="block text-xs font-medium text-slate-600 mb-0.5">ID Handover</label>
-                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
+                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-slate-700">
                           {project.handover_id || 'N/D'}
                         </div>
                       </div>
@@ -337,13 +337,13 @@ const StatusReport = ({ projectId, onClose }) => {
                     <div className="grid grid-cols-2 gap-2 print:hidden">
                       <div>
                         <label className="block text-xs font-medium text-slate-600 mb-0.5">Fase Corrente</label>
-                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
+                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-slate-700">
                           {project.current_phase || 'Fase 1'}
                         </div>
                       </div>
                       <div>
                         <label className="block text-xs font-medium text-slate-600 mb-0.5">Punteggio Progetto</label>
-                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm font-semibold text-slate-700">
+                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded font-semibold text-slate-700">
                           {project.project_score || 0}
                         </div>
                       </div>
@@ -353,7 +353,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
                 {/* Project Metrics */}
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                  <h4 className="font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
                     Metriche Progetto
                   </h4>
                   <div className="grid grid-cols-2 gap-2">
@@ -378,14 +378,14 @@ const StatusReport = ({ projectId, onClose }) => {
 
                 {/* Project Details */}
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                  <h4 className="font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
                     Dettagli Progetto
                   </h4>
                   <div className="space-y-2">
                     <div className="grid grid-cols-2 gap-2">
                       <div>
                         <label className="block text-xs font-medium text-slate-600 mb-0.5">Famiglia Macchina</label>
-                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
+                        <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-slate-700">
                           {project.machine_family || 'Non specificata'}
                         </div>
                       </div>
@@ -398,7 +398,7 @@ const StatusReport = ({ projectId, onClose }) => {
                               Yes (Voce a Listino)
                             </span>
                           ) : (
-                            <span className="text-sm text-slate-600">No</span>
+                            <span className="text-slate-600">No</span>
                           )}
                         </div>
                       </div>
@@ -424,19 +424,19 @@ const StatusReport = ({ projectId, onClose }) => {
 
                 {/* Leadership */}
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                  <h4 className="font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
                     Leadership Progetto
                   </h4>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <label className="block text-xs font-medium text-slate-600 mb-0.5">R&D Lead</label>
-                      <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
+                      <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-slate-700">
                         {project.rd_lead || 'Non assegnato'}
                       </div>
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-slate-600 mb-0.5">Automation Lead</label>
-                      <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
+                      <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-slate-700">
                         {project.automation_lead || 'Non assegnato'}
                       </div>
                     </div>
@@ -447,7 +447,7 @@ const StatusReport = ({ projectId, onClose }) => {
               {/* Right Column: Statistics Grid - Clean style matching Overview tab */}
               <div className="print:hidden">
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                  <h4 className="font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
                     Statistiche Avanzamento
                   </h4>
                   <div className="grid grid-cols-2 gap-3">
@@ -508,7 +508,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
             {/* Project Timeline - Full Width - Clean style */}
             <div className="mt-4 page-break-inside-avoid">
-              <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200 flex items-center justify-between">
+              <h4 className="font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200 flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-4 h-4 text-slate-600" />
                   <span>Cronologia Progetto</span>
@@ -592,15 +592,15 @@ const StatusReport = ({ projectId, onClose }) => {
                     <div className="flex justify-between items-center mt-8 text-xs">
                       <div className="text-left">
                         <div className="text-slate-500 font-medium">Inizio</div>
-                        <div className="text-sm font-semibold text-slate-900">{formatDate(project.start_date)}</div>
+                        <div className="font-semibold text-slate-900">{formatDate(project.start_date)}</div>
                       </div>
                       <div className="text-center bg-emerald-50 px-3 py-1 rounded">
                         <div className="text-slate-500 font-medium">Durata</div>
-                        <div className="text-sm font-semibold text-slate-900">{totalDays} giorni</div>
+                        <div className="font-semibold text-slate-900">{totalDays} giorni</div>
                       </div>
                       <div className="text-right">
                         <div className="text-slate-500 font-medium">Obiettivo</div>
-                        <div className="text-sm font-semibold text-slate-900">{formatDate(project.target_date)}</div>
+                        <div className="font-semibold text-slate-900">{formatDate(project.target_date)}</div>
                       </div>
                     </div>
                   </div>
@@ -643,7 +643,7 @@ const StatusReport = ({ projectId, onClose }) => {
                   Composizione del Team
                 </h3>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full bg-white border border-gray-200 text-sm">
+                  <table className="min-w-full bg-white border border-gray-200">
                     <thead className="bg-gray-100">
                       <tr>
                         <th className="px-3 py-2 text-left text-xs font-semibold">Reparto</th>
@@ -686,7 +686,7 @@ const StatusReport = ({ projectId, onClose }) => {
                     <div className="p-4">
                       {/* Feature Name Header */}
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-lg text-sm font-semibold">
+                        <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-lg font-semibold">
                           #{idx + 1}
                         </span>
                         <h4 className="text-lg font-semibold text-secondary-900">
@@ -702,7 +702,7 @@ const StatusReport = ({ projectId, onClose }) => {
                             <p className="text-xs font-semibold text-secondary-500 uppercase tracking-wide mb-1">
                               Descrizione
                             </p>
-                            <p className="text-sm text-secondary-700 leading-relaxed whitespace-pre-wrap">
+                            <p className="text-secondary-700 leading-relaxed whitespace-pre-wrap">
                               {feature.description}
                             </p>
                           </div>
@@ -714,7 +714,7 @@ const StatusReport = ({ projectId, onClose }) => {
                             <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">
                               Finalità
                             </p>
-                            <p className="text-sm text-secondary-700 leading-relaxed whitespace-pre-wrap">
+                            <p className="text-secondary-700 leading-relaxed whitespace-pre-wrap">
                               {feature.purpose}
                             </p>
                           </div>
@@ -726,7 +726,7 @@ const StatusReport = ({ projectId, onClose }) => {
                             <p className="text-xs font-semibold text-amber-600 uppercase tracking-wide mb-1">
                               Specifiche Tecniche
                             </p>
-                            <p className="text-sm text-secondary-700 leading-relaxed whitespace-pre-wrap font-mono">
+                            <p className="text-secondary-700 leading-relaxed whitespace-pre-wrap font-mono">
                               {feature.tech_specs}
                             </p>
                           </div>
@@ -739,7 +739,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
               {/* Features Summary */}
               <div className="mt-4 bg-purple-50 border border-purple-200 rounded-lg p-3 text-center page-break-inside-avoid">
-                <p className="text-sm text-secondary-600">
+                <p className="text-secondary-600">
                   Funzionalità totali documentate: <span className="font-bold text-purple-700">{features.length}</span>
                 </p>
               </div>
@@ -756,32 +756,32 @@ const StatusReport = ({ projectId, onClose }) => {
               <div className="space-y-4">
                 {project.osservazioni_note && (
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                    <h4 className="font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
                       Osservazioni / Note
                     </h4>
-                    <div className="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                    <div className="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-slate-700 leading-relaxed whitespace-pre-wrap">
                       {project.osservazioni_note}
                     </div>
                   </div>
                 )}
                 {project.azioni_correttive && (
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                    <h4 className="font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
                       Azioni Correttive
                     </h4>
-                    <div className="px-3 py-2 bg-amber-50 border border-amber-200 rounded text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                    <div className="px-3 py-2 bg-amber-50 border border-amber-200 rounded text-slate-700 leading-relaxed whitespace-pre-wrap">
                       {project.azioni_correttive}
                     </div>
                   </div>
                 )}
                 {criticalities && criticalities.length > 0 && (
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                    <h4 className="font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
                       Criticità
                     </h4>
                     <ol className="space-y-1 list-decimal list-inside">
                       {criticalities.map((c, idx) => (
-                        <li key={idx} className="px-3 py-1.5 bg-red-50 border border-red-200 rounded text-sm text-slate-700">
+                        <li key={idx} className="px-3 py-1.5 bg-red-50 border border-red-200 rounded text-slate-700">
                           {c.criticality_text}
                         </li>
                       ))}
@@ -871,7 +871,7 @@ const StatusReport = ({ projectId, onClose }) => {
                           <div key={index} className="bg-white border border-secondary-200 rounded p-3">
                             {/* Month Header */}
                             <div className="text-center mb-2">
-                              <div className="text-sm font-bold text-secondary-900">{monthNames[month]}</div>
+                              <div className="font-bold text-secondary-900">{monthNames[month]}</div>
                               <div className="text-xs text-secondary-500">{year}</div>
                             </div>
 
@@ -937,12 +937,12 @@ const StatusReport = ({ projectId, onClose }) => {
 
                     {/* Sessions List Below Calendar */}
                     <div className="mt-4 pt-4 border-t border-secondary-200">
-                      <h4 className="text-sm font-semibold text-secondary-900 mb-3">Dettaglio Sessioni</h4>
+                      <h4 className="font-semibold text-secondary-900 mb-3">Dettaglio Sessioni</h4>
                       <div className="space-y-2">
                         {knowledgeSessions
                           .sort((a, b) => new Date(a.scheduled_date) - new Date(b.scheduled_date))
                           .map((session, idx) => (
-                            <div key={idx} className="flex items-start gap-3 bg-gray-50 rounded p-2 text-sm page-break-inside-avoid">
+                            <div key={idx} className="flex items-start gap-3 bg-gray-50 rounded p-2 page-break-inside-avoid">
                               <div className={`flex-shrink-0 px-2 py-1 rounded text-xs font-medium min-w-[80px] text-center ${
                                 session.status === 'Completed'
                                   ? 'bg-green-100 text-green-700'
@@ -1037,7 +1037,7 @@ const StatusReport = ({ projectId, onClose }) => {
                         >
                           <div className="flex items-start gap-3">
                             {/* Phase Number Circle */}
-                            <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                            <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
                               status === 'complete' ? 'bg-emerald-500 text-white' :
                               status === 'progress' ? 'bg-amber-500 text-white' :
                               'bg-slate-300 text-slate-600'
@@ -1048,7 +1048,7 @@ const StatusReport = ({ projectId, onClose }) => {
                             <div className="flex-1 min-w-0">
                               {/* Phase Header */}
                               <div className="flex items-center justify-between mb-1.5">
-                                <h4 className="text-sm font-semibold text-slate-900">{phaseName}</h4>
+                                <h4 className="font-semibold text-slate-900">{phaseName}</h4>
                                 <div className="flex items-center gap-2">
                                   <span className="text-xs font-semibold text-blue-600">{stats.percentage}%</span>
                                   {status === 'complete' && <CheckCircle className="w-4 h-4 text-emerald-500" />}
@@ -1126,7 +1126,7 @@ const StatusReport = ({ projectId, onClose }) => {
                         <div key={category} className="mb-4 ml-4">
                           <h5 className="text-lg font-medium mb-2 text-secondary-600">{category}</h5>
                           <div className="overflow-x-auto">
-                            <table className="min-w-full bg-white border border-gray-200 text-sm">
+                            <table className="min-w-full bg-white border border-gray-200">
                               <thead className="bg-gray-50">
                                 <tr>
                                   <th className="px-3 py-2 text-left text-xs font-semibold">Requisito</th>
@@ -1171,7 +1171,7 @@ const StatusReport = ({ projectId, onClose }) => {
                 Problemi e Rischi
               </h3>
               <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200 text-sm">
+                <table className="min-w-full bg-white border border-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-3 py-2 text-left text-xs font-semibold">ID Problema</th>
@@ -1214,7 +1214,7 @@ const StatusReport = ({ projectId, onClose }) => {
                 Allegati e Documentazione
               </h3>
               <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200 text-sm">
+                <table className="min-w-full bg-white border border-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-3 py-2 text-left text-xs font-semibold">Nome File</th>

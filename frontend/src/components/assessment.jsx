@@ -831,14 +831,14 @@ const Assessment = ({ projectId }) => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-secondary-900">Eliminare il criterio di valutazione?</h3>
-                <p className="text-sm text-secondary-500">Questa azione non può essere annullata</p>
+                <p className="text-secondary-500">Questa azione non può essere annullata</p>
               </div>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-4 mb-4">
-              <p className="text-sm text-secondary-700 mb-2">Stai per eliminare:</p>
+              <p className="text-secondary-700 mb-2">Stai per eliminare:</p>
               <p className="font-semibold text-secondary-900">{itemToDelete?.criteria}</p>
-              <p className="text-sm text-secondary-600 mt-1">
+              <p className="text-secondary-600 mt-1">
                 Fase: {itemToDelete?.phase} | Categoria: {itemToDelete?.category}
               </p>
             </div>
@@ -872,17 +872,17 @@ const Assessment = ({ projectId }) => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-secondary-900">Eliminare l'intera categoria?</h3>
-                <p className="text-sm text-secondary-500">Questa operazione eliminerà tutti gli elementi in questa categoria</p>
+                <p className="text-secondary-500">Questa operazione eliminerà tutti gli elementi in questa categoria</p>
               </div>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-4 mb-4">
-              <p className="text-sm text-secondary-700 mb-2">Stai per eliminare:</p>
+              <p className="text-secondary-700 mb-2">Stai per eliminare:</p>
               <p className="font-semibold text-secondary-900">{categoryToDelete?.category}</p>
-              <p className="text-sm text-secondary-600 mt-1">
+              <p className="text-secondary-600 mt-1">
                 Fase: {categoryToDelete?.phase}
               </p>
-              <p className="text-sm text-red-600 mt-2 font-medium">
+              <p className="text-red-600 mt-2 font-medium">
                 {assessments.filter(item =>
                   item.phase === categoryToDelete?.phase && item.category === categoryToDelete?.category
                 ).length} item(s) will be deleted
@@ -913,13 +913,13 @@ const Assessment = ({ projectId }) => {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-lg font-semibold text-secondary-900">Valutazione della prontezza del progetto</h2>
-            <p className="text-sm text-secondary-600 mt-1">
+            <p className="text-secondary-600 mt-1">
               Valutazione complessiva su tutte le fasi di consegna
             </p>
           </div>
           <div className="flex items-center gap-3">
             {saveStatus && (
-              <span className={`text-sm font-medium ${
+              <span className={`font-medium ${
                 saveStatus.includes('Error') ? 'text-red-600' : 'text-green-600'
               }`}>
                 {saveStatus}
@@ -933,12 +933,12 @@ const Assessment = ({ projectId }) => {
           <div className={`${readiness.bg} border-2 ${readiness.color.replace('text-', 'border-')} rounded-lg p-6`}>
             <div className="flex items-center justify-between mb-2">
               <Award className={`w-8 h-8 ${readiness.color}`} />
-              <span className={`text-sm font-semibold ${readiness.color}`}>{readiness.label}</span>
+              <span className={`font-semibold ${readiness.color}`}>{readiness.label}</span>
             </div>
             <div className={`text-4xl font-bold ${readiness.color} mb-1`}>
               {overallScore}%
             </div>
-            <div className="text-sm text-secondary-600">Prontezza complessiva</div>
+            <div className="text-secondary-600">Prontezza complessiva</div>
           </div>
 
           {phases.map(phaseInfo => {
@@ -954,7 +954,7 @@ const Assessment = ({ projectId }) => {
                 <div className="text-3xl font-bold text-secondary-900 mb-1">
                   {phaseScore}%
                 </div>
-                <div className="text-sm text-secondary-600">{phaseInfo.name.split(':')[0]}</div>
+                <div className="text-secondary-600">{phaseInfo.name.split(':')[0]}</div>
               </div>
             );
           })}
@@ -962,7 +962,7 @@ const Assessment = ({ projectId }) => {
 
         {/* Readiness Scale */}
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <h3 className="font-semibold text-secondary-900 mb-3 text-sm">Classificazione del livello di prontezza:</h3>
+          <h3 className="font-semibold text-secondary-900 mb-3">Classificazione del livello di prontezza:</h3>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -1057,7 +1057,7 @@ const Assessment = ({ projectId }) => {
                     )}
                   </div>
                   {editingPhaseId !== phaseInfo.id && (
-                    <p className="text-sm mt-1 text-secondary-700">
+                    <p className="mt-1 text-secondary-700">
                       {phaseItems.filter(i => i.score !== null && i.score > 0).length} di {phaseItems.length} valutati • {phaseInfo.weight}% del totale
                     </p>
                   )}
@@ -1069,7 +1069,7 @@ const Assessment = ({ projectId }) => {
                       e.stopPropagation();
                       handleAddCustomCriteria(phaseInfo.id);
                     }}
-                    className="mt-2 px-3 py-1 bg-gray-800 bg-opacity-20 hover:bg-opacity-30 rounded-lg text-sm flex items-center gap-1 transition-colors"
+                    className="mt-2 px-3 py-1 bg-gray-800 bg-opacity-20 hover:bg-opacity-30 rounded-lg flex items-center gap-1 transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     Aggiungi criterio
@@ -1172,7 +1172,7 @@ const Assessment = ({ projectId }) => {
                           </div>
                           
                           <div className="flex items-center gap-4">
-                            <span className="text-sm font-medium text-secondary-600">
+                            <span className="font-medium text-secondary-600">
                               {categoryItems.filter(i => i.score !== null && i.score > 0).length}/{categoryItems.length} valutati
                             </span>
                             <div className="flex items-center gap-2">
@@ -1182,7 +1182,7 @@ const Assessment = ({ projectId }) => {
                                   style={{ width: `${categoryScore}%` }}
                                 />
                               </div>
-                              <span className="text-sm font-bold text-secondary-900 w-12 text-right">
+                              <span className="font-bold text-secondary-900 w-12 text-right">
                                 {categoryScore}%
                               </span>
                             </div>
@@ -1201,7 +1201,7 @@ const Assessment = ({ projectId }) => {
                                     type="text"
                                     value={editingItemText}
                                     onChange={(e) => setEditingItemText(e.target.value)}
-                                    className="flex-1 px-3 py-1 text-sm border-2 border-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="flex-1 px-3 py-1 border-2 border-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     autoFocus
                                     placeholder="Inserisci il criterio..."
                                     onKeyDown={(e) => {
@@ -1229,7 +1229,7 @@ const Assessment = ({ projectId }) => {
                                   <div className="flex items-center gap-3">
                                     {/* Criteria and Score in one line */}
                                     <div className="flex-1 flex items-center gap-3 min-w-0">
-                                      <h4 className="text-sm text-secondary-900 flex-1 truncate" title={item.criteria}>
+                                      <h4 className="text-secondary-900 flex-1 truncate" title={item.criteria}>
                                         {item.criteria}
                                       </h4>
 

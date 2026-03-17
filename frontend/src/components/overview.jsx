@@ -416,7 +416,7 @@ const Overview = ({ project, setProject }) => {
                       <Calendar className="w-3.5 h-3.5 text-primary-600" />
                       <div>
                         <div className="text-xs text-secondary-500">Data</div>
-                        <div className="text-sm font-semibold">
+                        <div className="font-semibold">
                           {sessionDate.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
                         </div>
                       </div>
@@ -426,7 +426,7 @@ const Overview = ({ project, setProject }) => {
                       <Clock className="w-3.5 h-3.5 text-primary-600" />
                       <div>
                         <div className="text-xs text-secondary-500">Ora e durata</div>
-                        <div className="text-sm font-semibold">
+                        <div className="font-semibold">
                           {nextSession.start_time && <span className="text-primary-600">{nextSession.start_time}</span>}
                           {nextSession.start_time && nextSession.duration && <span className="text-secondary-400 mx-1">•</span>}
                           {nextSession.duration && <span>{nextSession.duration} h</span>}
@@ -439,7 +439,7 @@ const Overview = ({ project, setProject }) => {
                         <Users className="w-3.5 h-3.5 text-primary-600 mt-0.5" />
                         <div>
                           <div className="text-xs text-secondary-500 mb-0.5">Partecipanti</div>
-                          <div className="text-sm font-semibold">
+                          <div className="font-semibold">
                             {nextSession.attendees.split(',').map((attendee, index) => (
                               <div key={index}>{attendee.trim()}</div>
                             ))}
@@ -492,17 +492,17 @@ const Overview = ({ project, setProject }) => {
         {showProjectDetails && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-4">
             <div>
-              <label className="block text-sm font-semibold text-secondary-900 mb-1">Famiglia macchina</label>
+              <label className="block font-semibold text-secondary-900 mb-1">Famiglia macchina</label>
               <input
                 type="text"
                 value={project.machine_family || ''}
                 onChange={(e) => handleChange('machine_family', e.target.value)}
-                className="w-full px-2.5 py-1.5 text-sm bg-white border-2 border-primary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-2.5 py-1.5 bg-white border-2 border-primary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 placeholder="Inserisci la famiglia macchina"
               />
             </div>
             <div>
-              <div className="block text-sm font-semibold text-secondary-900 mb-1 invisible">Deliverable</div>
+              <div className="block font-semibold text-secondary-900 mb-1 invisible">Deliverable</div>
               <label className="flex items-center gap-2 cursor-pointer px-2.5 py-1.5">
                 <input
                   type="checkbox"
@@ -510,11 +510,11 @@ const Overview = ({ project, setProject }) => {
                   onChange={(e) => handleChange('deliverable', e.target.checked)}
                   className="w-4 h-4 text-primary-600 border-primary-400 rounded focus:ring-2 focus:ring-primary-500"
                 />
-                <span className="text-sm font-medium text-secondary-900">Deliverable (Voce a Listino)</span>
+                <span className="font-medium text-secondary-900">Deliverable (Voce a Listino)</span>
               </label>
             </div>
             <div className="lg:col-span-2">
-              <label className="block text-sm font-semibold text-secondary-900 mb-1">Descrizione</label>
+              <label className="block font-semibold text-secondary-900 mb-1">Descrizione</label>
               <textarea
                 ref={descriptionRef}
                 value={project.description || ''}
@@ -523,14 +523,14 @@ const Overview = ({ project, setProject }) => {
                   handleTextareaResize(e);
                 }}
                 onInput={handleTextareaResize}
-                className="w-full px-2.5 py-1.5 text-sm bg-white border-2 border-primary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none overflow-hidden"
+                className="w-full px-2.5 py-1.5 bg-white border-2 border-primary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none overflow-hidden"
                 placeholder="Fornisci una descrizione dettagliata del progetto"
                 rows="2"
                 style={{ minHeight: '60px' }}
               />
             </div>
             <div className="lg:col-span-2">
-              <label className="block text-sm font-semibold text-secondary-900 mb-1">Contesto e utilizzo</label>
+              <label className="block font-semibold text-secondary-900 mb-1">Contesto e utilizzo</label>
               <textarea
                 ref={contextUsageRef}
                 value={project.context_usage || ''}
@@ -539,7 +539,7 @@ const Overview = ({ project, setProject }) => {
                   handleTextareaResize(e);
                 }}
                 onInput={handleTextareaResize}
-                className="w-full px-2.5 py-1.5 text-sm bg-white border-2 border-primary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none overflow-hidden"
+                className="w-full px-2.5 py-1.5 bg-white border-2 border-primary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-none overflow-hidden"
                 placeholder="Descrivi il contesto e gli scenari d'uso per questo progetto"
                 rows="2"
                 style={{ minHeight: '60px' }}
@@ -559,7 +559,7 @@ const Overview = ({ project, setProject }) => {
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-1.5">
                         <Clock className="w-4 h-4 text-secondary-700" />
-                        <h3 className="text-sm font-semibold text-secondary-900">Cronologia del progetto</h3>
+                        <h3 className="font-semibold text-secondary-900">Cronologia del progetto</h3>
                       </div>
                       <div className="flex items-center gap-1.5 text-xs text-secondary-600">
                         <span className={`font-semibold ${timeline.remainingDays < 0 ? 'text-danger-600' : timeline.remainingDays < 7 ? 'text-warning-600' : 'text-success-600'}`}>
@@ -718,19 +718,19 @@ const Overview = ({ project, setProject }) => {
                       <div className="flex justify-between items-center mt-8 text-xs">
                         <div className="text-left">
                           <div className="text-secondary-500 font-medium">Inizio</div>
-                          <div className="text-sm font-semibold text-secondary-900">
+                          <div className="font-semibold text-secondary-900">
                             {timeline.start.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                           </div>
                         </div>
                         <div className="text-center bg-success-50 px-3 py-1 rounded">
                           <div className="text-secondary-500 font-medium">Durata</div>
-                          <div className="text-sm font-semibold text-secondary-900">
+                          <div className="font-semibold text-secondary-900">
                             {timeline.totalDays} giorni
                           </div>
                         </div>
                         <div className="text-right">
                           <div className="text-secondary-500 font-medium">Data target</div>
-                          <div className="text-sm font-semibold text-secondary-900">
+                          <div className="font-semibold text-secondary-900">
                             {timeline.end.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                           </div>
                         </div>
@@ -772,8 +772,8 @@ const Overview = ({ project, setProject }) => {
           <div className="space-y-3">
             <div className="flex flex-col md:flex-row gap-3">
               <div className="flex-1">
-                <label className="block text-sm font-medium text-secondary-700 mb-1">Nome progetto</label>
-                <div className="px-3 py-2 bg-secondary-50 border border-secondary-200 rounded text-sm font-semibold text-secondary-900">
+                <label className="block font-medium text-secondary-700 mb-1">Nome progetto</label>
+                <div className="px-3 py-2 bg-secondary-50 border border-secondary-200 rounded font-semibold text-secondary-900">
                   {project.project_name || 'Non impostato'}
                 </div>
               </div>
@@ -792,12 +792,12 @@ const Overview = ({ project, setProject }) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">Responsabile progetto R&D</label>
+                <label className="block font-medium text-secondary-700 mb-1">Responsabile progetto R&D</label>
                 {project.rd_lead ? (
                   <div className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-300 rounded">
                     <Star className="w-4 h-4 text-warning-600 fill-warning-600 flex-shrink-0" />
                     <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-secondary-900">
+                      <span className="font-semibold text-secondary-900">
                         {project.rd_lead.split(' (')[0]}
                       </span>
                       <span className="text-xs text-secondary-600">
@@ -813,12 +813,12 @@ const Overview = ({ project, setProject }) => {
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">Responsabile team Automation</label>
+                <label className="block font-medium text-secondary-700 mb-1">Responsabile team Automation</label>
                 {project.automation_lead ? (
                   <div className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-primary-50 to-primary-100 border border-primary-300 rounded">
                     <Star className="w-4 h-4 text-warning-600 fill-warning-600 flex-shrink-0" />
                     <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-secondary-900">
+                      <span className="font-semibold text-secondary-900">
                         {project.automation_lead.split(' (')[0]}
                       </span>
                       <span className="text-xs text-secondary-600">
@@ -841,7 +841,7 @@ const Overview = ({ project, setProject }) => {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-1.5">
                 <Users className="w-4 h-4 text-secondary-700" />
-                <h3 className="text-sm font-semibold text-secondary-900">Composizione del team</h3>
+                <h3 className="font-semibold text-secondary-900">Composizione del team</h3>
               </div>
               <button onClick={() => setShowAddForm(!showAddForm)} className="flex items-center gap-1.5 px-2.5 py-1 bg-primary-600 text-white text-xs rounded hover:bg-primary-700 transition-colors">
                 {showAddForm ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
@@ -850,19 +850,19 @@ const Overview = ({ project, setProject }) => {
             </div>
             {showAddForm && (
               <div className="bg-primary-50 border border-primary-200 rounded p-3 mb-3">
-                <h4 className="text-sm font-semibold text-primary-900 mb-2">Aggiungi nuovo membro del team</h4>
+                <h4 className="font-semibold text-primary-900 mb-2">Aggiungi nuovo membro del team</h4>
                 <div className="grid grid-cols-1 gap-2">
                   <div>
-                    <label className="block text-sm font-medium text-secondary-700 mb-0.5">Nome <span className="text-danger-500">*</span></label>
-                    <input type="text" value={newContact.name} onChange={(e) => setNewContact({ ...newContact, name: e.target.value })} className="w-full px-2.5 py-1.5 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Mario Rossi" />
+                    <label className="block font-medium text-secondary-700 mb-0.5">Nome <span className="text-danger-500">*</span></label>
+                    <input type="text" value={newContact.name} onChange={(e) => setNewContact({ ...newContact, name: e.target.value })} className="w-full px-2.5 py-1.5 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Mario Rossi" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-secondary-700 mb-0.5">Ruolo <span className="text-danger-500">*</span></label>
-                    <input type="text" value={newContact.role} onChange={(e) => setNewContact({ ...newContact, role: e.target.value })} className="w-full px-2.5 py-1.5 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Responsabile progetto" />
+                    <label className="block font-medium text-secondary-700 mb-0.5">Ruolo <span className="text-danger-500">*</span></label>
+                    <input type="text" value={newContact.role} onChange={(e) => setNewContact({ ...newContact, role: e.target.value })} className="w-full px-2.5 py-1.5 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Responsabile progetto" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-secondary-700 mb-0.5">Reparto <span className="text-danger-500">*</span></label>
-                    <select value={newContact.department} onChange={(e) => setNewContact({ ...newContact, department: e.target.value })} className="w-full px-2.5 py-1.5 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <label className="block font-medium text-secondary-700 mb-0.5">Reparto <span className="text-danger-500">*</span></label>
+                    <select value={newContact.department} onChange={(e) => setNewContact({ ...newContact, department: e.target.value })} className="w-full px-2.5 py-1.5 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500">
                       <option value="">Seleziona reparto</option>
                       <option value="R&D">R&D</option>
                       <option value="Automazione">Automazione</option>
@@ -871,21 +871,21 @@ const Overview = ({ project, setProject }) => {
                       <option value="Altro">Altro</option>
                     </select>
                     {newContact.department === 'Altro' && (
-                      <input type="text" value={newContactCustomDept} onChange={(e) => setNewContactCustomDept(e.target.value)} className="w-full mt-1.5 px-2.5 py-1.5 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Specifica il reparto..." />
+                      <input type="text" value={newContactCustomDept} onChange={(e) => setNewContactCustomDept(e.target.value)} className="w-full mt-1.5 px-2.5 py-1.5 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Specifica il reparto..." />
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-secondary-700 mb-0.5">Email</label>
-                    <input type="email" value={newContact.email} onChange={(e) => setNewContact({ ...newContact, email: e.target.value })} className="w-full px-2.5 py-1.5 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="mario.rossi@azienda.com" />
+                    <label className="block font-medium text-secondary-700 mb-0.5">Email</label>
+                    <input type="email" value={newContact.email} onChange={(e) => setNewContact({ ...newContact, email: e.target.value })} className="w-full px-2.5 py-1.5 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="mario.rossi@azienda.com" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-secondary-700 mb-0.5">Telefono</label>
-                    <input type="tel" value={newContact.phone} onChange={(e) => setNewContact({ ...newContact, phone: e.target.value })} className="w-full px-2.5 py-1.5 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="+39-02-0000000" />
+                    <label className="block font-medium text-secondary-700 mb-0.5">Telefono</label>
+                    <input type="tel" value={newContact.phone} onChange={(e) => setNewContact({ ...newContact, phone: e.target.value })} className="w-full px-2.5 py-1.5 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="+39-02-0000000" />
                   </div>
                 </div>
                 <div className="flex gap-2 mt-2">
-                  <button onClick={handleAddContact} disabled={saving} className="px-3 py-1.5 text-sm bg-success-600 text-white rounded hover:bg-success-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">{saving ? 'Aggiunta...' : 'Aggiungi membro'}</button>
-                  <button onClick={() => { setShowAddForm(false); setNewContact({ name: '', role: '', department: '', email: '', phone: '' }); setNewContactCustomDept(''); }} className="px-3 py-1.5 text-sm bg-secondary-300 text-secondary-700 rounded hover:bg-secondary-400 transition-colors">Annulla</button>
+                  <button onClick={handleAddContact} disabled={saving} className="px-3 py-1.5 bg-success-600 text-white rounded hover:bg-success-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">{saving ? 'Aggiunta...' : 'Aggiungi membro'}</button>
+                  <button onClick={() => { setShowAddForm(false); setNewContact({ name: '', role: '', department: '', email: '', phone: '' }); setNewContactCustomDept(''); }} className="px-3 py-1.5 bg-secondary-300 text-secondary-700 rounded hover:bg-secondary-400 transition-colors">Annulla</button>
                 </div>
               </div>
             )}
@@ -899,19 +899,19 @@ const Overview = ({ project, setProject }) => {
                   <div key={contact.id} className="bg-secondary-50 rounded p-3 border border-secondary-200 relative group">
                     {editingContact === contact.id ? (
                       <div>
-                        <h4 className="text-sm font-semibold text-secondary-900 mb-2">Modifica membro del team</h4>
+                        <h4 className="font-semibold text-secondary-900 mb-2">Modifica membro del team</h4>
                         <div className="space-y-3">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Nome <span className="text-red-500">*</span></label>
-                            <input type="text" value={editContact.name} onChange={(e) => setEditContact({ ...editContact, name: e.target.value })} className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <label className="block font-medium text-gray-700 mb-1">Nome <span className="text-red-500">*</span></label>
+                            <input type="text" value={editContact.name} onChange={(e) => setEditContact({ ...editContact, name: e.target.value })} className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Ruolo <span className="text-red-500">*</span></label>
-                            <input type="text" value={editContact.role} onChange={(e) => setEditContact({ ...editContact, role: e.target.value })} className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <label className="block font-medium text-gray-700 mb-1">Ruolo <span className="text-red-500">*</span></label>
+                            <input type="text" value={editContact.role} onChange={(e) => setEditContact({ ...editContact, role: e.target.value })} className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Reparto <span className="text-red-500">*</span></label>
-                            <select value={editContact.department} onChange={(e) => setEditContact({ ...editContact, department: e.target.value })} className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label className="block font-medium text-gray-700 mb-1">Reparto <span className="text-red-500">*</span></label>
+                            <select value={editContact.department} onChange={(e) => setEditContact({ ...editContact, department: e.target.value })} className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                               <option value="">Seleziona reparto</option>
                               <option value="R&D">R&D</option>
                               <option value="Automazione">Automazione</option>
@@ -920,21 +920,21 @@ const Overview = ({ project, setProject }) => {
                               <option value="Altro">Altro</option>
                             </select>
                             {editContact.department === 'Altro' && (
-                              <input type="text" value={editContactCustomDept} onChange={(e) => setEditContactCustomDept(e.target.value)} className="w-full mt-1.5 px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Specifica il reparto..." />
+                              <input type="text" value={editContactCustomDept} onChange={(e) => setEditContactCustomDept(e.target.value)} className="w-full mt-1.5 px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Specifica il reparto..." />
                             )}
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                            <input type="email" value={editContact.email} onChange={(e) => setEditContact({ ...editContact, email: e.target.value })} className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="mario.rossi@azienda.com" />
+                            <label className="block font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" value={editContact.email} onChange={(e) => setEditContact({ ...editContact, email: e.target.value })} className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="mario.rossi@azienda.com" />
                           </div>
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Telefono</label>
-                            <input type="tel" value={editContact.phone} onChange={(e) => setEditContact({ ...editContact, phone: e.target.value })} className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <label className="block font-medium text-gray-700 mb-1">Telefono</label>
+                            <input type="tel" value={editContact.phone} onChange={(e) => setEditContact({ ...editContact, phone: e.target.value })} className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                           </div>
                         </div>
                         <div className="flex gap-2 mt-3">
-                          <button onClick={handleUpdateContact} disabled={saving} className="flex-1 px-3 py-1.5 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors disabled:opacity-50">{saving ? 'Salvataggio...' : 'Salva'}</button>
-                          <button onClick={handleCancelEdit} className="flex-1 px-3 py-1.5 bg-gray-300 text-gray-700 text-sm rounded hover:bg-gray-400 transition-colors">Annulla</button>
+                          <button onClick={handleUpdateContact} disabled={saving} className="flex-1 px-3 py-1.5 bg-green-600 text-white rounded hover:bg-green-700 transition-colors disabled:opacity-50">{saving ? 'Salvataggio...' : 'Salva'}</button>
+                          <button onClick={handleCancelEdit} className="flex-1 px-3 py-1.5 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors">Annulla</button>
                         </div>
                       </div>
                     ) : (
@@ -964,7 +964,7 @@ const Overview = ({ project, setProject }) => {
                               </div>
                               <div className="flex items-start justify-between">
                                 <div className="flex-1 pr-6">
-                                  <h4 className="text-sm font-semibold text-secondary-900">{contact.name}</h4>
+                                  <h4 className="font-semibold text-secondary-900">{contact.name}</h4>
                                   <p className="text-xs text-secondary-600 mt-0.5">{contact.role}</p>
                                   <div className="mt-1.5 space-y-0.5">
                                     <p className="text-xs text-secondary-500"><span className="font-medium">Reparto:</span> {contact.department}</p>
@@ -988,7 +988,7 @@ const Overview = ({ project, setProject }) => {
 
       {/* Project Metrics Summary */}
       <div className="bg-gradient-to-br from-white to-secondary-50 rounded shadow-md border-2 border-secondary-200 p-4">
-        <h2 className="text-sm font-semibold text-secondary-900 mb-3 flex items-center gap-2">
+        <h2 className="font-semibold text-secondary-900 mb-3 flex items-center gap-2">
           <div className="w-1 h-5 bg-primary-500 rounded-full"></div>
           Metriche e avanzamento progetto
         </h2>
@@ -999,7 +999,7 @@ const Overview = ({ project, setProject }) => {
               <Circle className="w-4 h-4 text-secondary-600" />
             </div>
             <div>
-              <div className="text-sm font-bold text-secondary-600">{getNotStartedTasksCount()}</div>
+              <div className="font-bold text-secondary-600">{getNotStartedTasksCount()}</div>
               <div className="text-xs text-secondary-500">Non iniziato</div>
             </div>
           </div>
@@ -1009,7 +1009,7 @@ const Overview = ({ project, setProject }) => {
               <Clock className="w-4 h-4 text-warning-600" />
             </div>
             <div>
-              <div className="text-sm font-bold text-warning-600">{getInProgressTasksCount()}</div>
+              <div className="font-bold text-warning-600">{getInProgressTasksCount()}</div>
               <div className="text-xs text-secondary-500">In corso</div>
             </div>
           </div>
@@ -1019,14 +1019,14 @@ const Overview = ({ project, setProject }) => {
               <CheckCircle className="w-4 h-4 text-success-600" />
             </div>
             <div>
-              <div className="text-sm font-bold text-success-600">{getCompletedTasksCount()}</div>
+              <div className="font-bold text-success-600">{getCompletedTasksCount()}</div>
               <div className="text-xs text-secondary-500">Completate</div>
             </div>
           </div>
 
           <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-primary-50 to-primary-100 rounded-lg border-2 border-primary-300 shadow-sm">
             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary-500">
-              <span className="text-sm font-bold text-white">{calculateOverallProgress()}%</span>
+              <span className="font-bold text-white">{calculateOverallProgress()}%</span>
             </div>
             <div>
               <div className="text-xs text-primary-700 font-medium">Avanzamento complessivo</div>
@@ -1041,7 +1041,7 @@ const Overview = ({ project, setProject }) => {
             <AlertCircle className="w-5 h-5 text-primary-600" />
             <div>
               <div className="text-xs text-secondary-500">Priorità</div>
-              <div className="text-sm font-semibold text-secondary-900">{project.business_priority || 'Media'}</div>
+              <div className="font-semibold text-secondary-900">{project.business_priority || 'Media'}</div>
             </div>
           </div>
 
@@ -1049,7 +1049,7 @@ const Overview = ({ project, setProject }) => {
             <Layers className="w-5 h-5 text-secondary-600" />
             <div>
               <div className="text-xs text-secondary-500">Complessità</div>
-              <div className="text-sm font-semibold text-secondary-900">{project.complexity_level || 'Media'}</div>
+              <div className="font-semibold text-secondary-900">{project.complexity_level || 'Media'}</div>
             </div>
           </div>
         </div>
@@ -1064,7 +1064,7 @@ const Overview = ({ project, setProject }) => {
                 phase.status === 'progress' ? 'bg-warning-50 border-warning-200' : 'bg-secondary-50 border-secondary-200'
               }`}>
               <div className="flex items-start gap-3">
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
                     phase.status === 'complete' ? 'bg-success-500 text-white' :
                     phase.status === 'progress' ? 'bg-warning-500 text-white' : 'bg-secondary-300 text-secondary-600'
                   }`}>
@@ -1074,24 +1074,24 @@ const Overview = ({ project, setProject }) => {
                   {editingPhase === phase.id ? (
                     // Edit Mode
                     <div className="bg-white p-3 rounded border border-primary-300">
-                      <h4 className="text-sm font-semibold text-secondary-900 mb-3">Modifica date della fase</h4>
+                      <h4 className="font-semibold text-secondary-900 mb-3">Modifica date della fase</h4>
                       <div className="grid grid-cols-2 gap-3 mb-3">
                         <div>
-                          <label className="block text-sm font-medium text-secondary-700 mb-1">Data inizio</label>
+                          <label className="block font-medium text-secondary-700 mb-1">Data inizio</label>
                           <input
                             type="date"
                             value={phaseEditData.startDate || ''}
                             onChange={(e) => setPhaseEditData({ ...phaseEditData, startDate: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            className="w-full px-2 py-1.5 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-secondary-700 mb-1">Data fine</label>
+                          <label className="block font-medium text-secondary-700 mb-1">Data fine</label>
                           <input
                             type="date"
                             value={phaseEditData.endDate || ''}
                             onChange={(e) => setPhaseEditData({ ...phaseEditData, endDate: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            className="w-full px-2 py-1.5 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                           />
                         </div>
                       </div>
@@ -1116,7 +1116,7 @@ const Overview = ({ project, setProject }) => {
                     <>
                       <div className="flex items-center justify-between mb-1.5">
                         <div className="flex items-center gap-2">
-                          <h3 className="text-sm font-semibold text-secondary-900">{phase.name}</h3>
+                          <h3 className="font-semibold text-secondary-900">{phase.name}</h3>
                           <button
                             onClick={() => handleEditPhaseClick(phase.id)}
                             className="opacity-0 group-hover:opacity-100 p-1 text-primary-600 hover:bg-primary-100 rounded transition-all"

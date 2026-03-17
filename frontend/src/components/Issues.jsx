@@ -306,7 +306,7 @@ const Issues = ({ projectId }) => {
               setShowAddForm(!showAddForm);
               setEditingIssue(null);
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-primary-600 text-white rounded hover:bg-primary-700 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 text-white rounded hover:bg-primary-700 transition-colors"
           >
             {showAddForm ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
             {showAddForm ? 'Annulla' : 'Aggiungi problema'}
@@ -316,10 +316,10 @@ const Issues = ({ projectId }) => {
         {/* Add Issue Form */}
         {showAddForm && (
           <div className="p-4 bg-primary-50 border-b border-primary-200">
-            <h3 className="text-sm font-semibold text-primary-900 mb-3">Aggiungi nuovo problema</h3>
+            <h3 className="font-semibold text-primary-900 mb-3">Aggiungi nuovo problema</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   ID Problema <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -331,7 +331,7 @@ const Issues = ({ projectId }) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   Data segnalazione
                 </label>
                 <input
@@ -342,7 +342,7 @@ const Issues = ({ projectId }) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   Segnalato da
                 </label>
                 <select
@@ -366,7 +366,7 @@ const Issues = ({ projectId }) => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   Priorità
                 </label>
                 <select
@@ -381,7 +381,7 @@ const Issues = ({ projectId }) => {
                 </select>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   Descrizione <span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -393,7 +393,7 @@ const Issues = ({ projectId }) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   Assegnato a
                 </label>
                 <select
@@ -417,7 +417,7 @@ const Issues = ({ projectId }) => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   Stato
                 </label>
                 <select
@@ -431,7 +431,7 @@ const Issues = ({ projectId }) => {
                 </select>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-secondary-700 mb-1">
+                <label className="block font-medium text-secondary-700 mb-1">
                   Data di risoluzione prevista
                 </label>
                 <input
@@ -544,7 +544,7 @@ const Issues = ({ projectId }) => {
                             type="text"
                             value={editIssue.issue_id}
                             onChange={(e) => setEditIssue({ ...editIssue, issue_id: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                         </div>
                         <div>
@@ -555,7 +555,7 @@ const Issues = ({ projectId }) => {
                             type="date"
                             value={editIssue.date_reported}
                             onChange={(e) => setEditIssue({ ...editIssue, date_reported: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                         </div>
                         <div>
@@ -565,7 +565,7 @@ const Issues = ({ projectId }) => {
                           <select
                             value={editIssue.reporter}
                             onChange={(e) => setEditIssue({ ...editIssue, reporter: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white cursor-pointer"
+                            className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white cursor-pointer"
                           >
                             <option value="">Seleziona segnalante...</option>
                             <optgroup label="Verificatori">
@@ -589,7 +589,7 @@ const Issues = ({ projectId }) => {
                           <select
                             value={editIssue.priority}
                             onChange={(e) => setEditIssue({ ...editIssue, priority: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                           >
                             <option value="Low">Bassa</option>
                             <option value="Medium">Media</option>
@@ -604,7 +604,7 @@ const Issues = ({ projectId }) => {
                           <textarea
                             value={editIssue.description}
                             onChange={(e) => setEditIssue({ ...editIssue, description: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             rows="3"
                           />
                         </div>
@@ -615,7 +615,7 @@ const Issues = ({ projectId }) => {
                           <select
                             value={editIssue.assigned_to}
                             onChange={(e) => setEditIssue({ ...editIssue, assigned_to: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white cursor-pointer"
+                            className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white cursor-pointer"
                           >
                             <option value="">Seleziona assegnatario...</option>
                             <optgroup label="Verificatori">
@@ -639,7 +639,7 @@ const Issues = ({ projectId }) => {
                           <select
                             value={editIssue.status}
                             onChange={(e) => setEditIssue({ ...editIssue, status: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                           >
                             <option value="Open">Aperto</option>
                             <option value="In Progress">In corso</option>
@@ -654,7 +654,7 @@ const Issues = ({ projectId }) => {
                             type="date"
                             value={editIssue.target_resolution}
                             onChange={(e) => setEditIssue({ ...editIssue, target_resolution: e.target.value })}
-                            className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                         </div>
                       </div>
@@ -662,13 +662,13 @@ const Issues = ({ projectId }) => {
                         <button
                           onClick={handleUpdateIssue}
                           disabled={saving}
-                          className="flex-1 px-3 py-1.5 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors disabled:opacity-50"
+                          className="flex-1 px-3 py-1.5 bg-green-600 text-white rounded hover:bg-green-700 transition-colors disabled:opacity-50"
                         >
                           {saving ? 'Salvataggio...' : 'Salva'}
                         </button>
                         <button
                           onClick={handleCancelEdit}
-                          className="flex-1 px-3 py-1.5 bg-gray-300 text-secondary-700 text-sm rounded hover:bg-gray-400 transition-colors"
+                          className="flex-1 px-3 py-1.5 bg-gray-300 text-secondary-700 rounded hover:bg-gray-400 transition-colors"
                         >
                           Annulla
                         </button>
@@ -689,7 +689,7 @@ const Issues = ({ projectId }) => {
                             </span>
                           </div>
                           <p className="text-secondary-700 mb-3">{issue.description}</p>
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm text-secondary-600">
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-secondary-600">
                             <div>
                               <span className="font-medium">Segnalato:</span> {formatDate(issue.date_reported)}
                             </div>
@@ -745,15 +745,15 @@ const Issues = ({ projectId }) => {
                 <Trash2 className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-secondary-900">Eliminare il problema?</h3>
-                <p className="text-sm text-secondary-500">Questa azione non può essere annullata</p>
+                <h3 className="font-semibold text-secondary-900">Eliminare il problema?</h3>
+                <p className="text-secondary-500">Questa azione non può essere annullata</p>
               </div>
             </div>
 
             <div className="bg-gray-50 rounded p-4 mb-4">
-              <p className="text-sm text-secondary-700 mb-2">Stai per eliminare:</p>
+              <p className="text-secondary-700 mb-2">Stai per eliminare:</p>
               <p className="font-semibold text-secondary-900">{issueToDelete.issue_id}</p>
-              <p className="text-sm text-secondary-600 mt-1 line-clamp-2">{issueToDelete.description}</p>
+              <p className="text-secondary-600 mt-1 line-clamp-2">{issueToDelete.description}</p>
               <div className="flex items-center gap-2 mt-2">
                 <span className={`px-2 py-1 rounded text-xs font-medium border ${getPriorityColor(issueToDelete.priority)}`}>
                   {issueToDelete.priority}

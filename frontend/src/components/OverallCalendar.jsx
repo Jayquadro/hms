@@ -213,7 +213,7 @@ function OverallCalendar({ onClose }) {
             <div className="flex bg-secondary-100 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('gantt')}
-                className={`px-3 py-1.5 rounded flex items-center gap-2 text-sm transition-colors ${
+                className={`px-3 py-1.5 rounded flex items-center gap-2 transition-colors ${
                   viewMode === 'gantt' ? 'bg-white text-primary-600 font-semibold shadow' : 'text-secondary-600'
                 }`}
               >
@@ -222,7 +222,7 @@ function OverallCalendar({ onClose }) {
               </button>
               <button
                 onClick={() => setViewMode('grid')}
-                className={`px-3 py-1.5 rounded flex items-center gap-2 text-sm transition-colors ${
+                className={`px-3 py-1.5 rounded flex items-center gap-2 transition-colors ${
                   viewMode === 'grid' ? 'bg-white text-primary-600 font-semibold shadow' : 'text-secondary-600'
                 }`}
               >
@@ -246,10 +246,10 @@ function OverallCalendar({ onClose }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Project Filter */}
               <div>
-                <label className="block text-sm font-semibold text-secondary-900 mb-2">Progetti</label>
+                <label className="block font-semibold text-secondary-900 mb-2">Progetti</label>
                 <div className="max-h-40 overflow-y-auto bg-white border border-secondary-300 rounded p-2 space-y-1">
                   {allProjects.map(project => (
-                    <label key={project.id} className="flex items-center gap-2 text-sm hover:bg-secondary-50 p-1 rounded cursor-pointer">
+                    <label key={project.id} className="flex items-center gap-2 hover:bg-secondary-50 p-1 rounded cursor-pointer">
                       <input
                         type="checkbox"
                         checked={selectedProjects.includes(project.id)}
@@ -265,11 +265,11 @@ function OverallCalendar({ onClose }) {
 
               {/* Status Filter */}
               <div>
-                <label className="block text-sm font-semibold text-secondary-900 mb-2">Stato</label>
+                <label className="block font-semibold text-secondary-900 mb-2">Stato</label>
                 <select
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3 py-2 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   <option value="all">Tutti gli stati</option>
                   <option value="active">Attivo</option>
@@ -280,20 +280,20 @@ function OverallCalendar({ onClose }) {
 
               {/* Date Range Filter */}
               <div>
-                <label className="block text-sm font-semibold text-secondary-900 mb-2">Intervallo date</label>
+                <label className="block font-semibold text-secondary-900 mb-2">Intervallo date</label>
                 <div className="flex gap-2">
                   <input
                     type="date"
                     value={dateRange.start}
                     onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
-                    className="flex-1 px-2 py-2 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="flex-1 px-2 py-2 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="Da"
                   />
                   <input
                     type="date"
                     value={dateRange.end}
                     onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
-                    className="flex-1 px-2 py-2 text-sm border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="flex-1 px-2 py-2 border border-secondary-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="A"
                   />
                 </div>
@@ -327,7 +327,7 @@ function OverallCalendar({ onClose }) {
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-3"></div>
-                <p className="text-sm text-secondary-600">Caricamento dati calendario...</p>
+                <p className="text-secondary-600">Caricamento dati calendario...</p>
               </div>
             </div>
           ) : getFilteredProjects().length === 0 ? (
@@ -335,7 +335,7 @@ function OverallCalendar({ onClose }) {
               <div className="text-center">
                 <Calendar className="w-16 h-16 text-secondary-300 mx-auto mb-3" />
                 <p className="text-lg font-semibold text-secondary-600 mb-1">Nessun progetto trovato</p>
-                <p className="text-sm text-secondary-500">Nessun progetto corrisponde ai filtri selezionati per {getDateRangeDisplay()}</p>
+                <p className="text-secondary-500">Nessun progetto corrisponde ai filtri selezionati per {getDateRangeDisplay()}</p>
               </div>
             </div>
           ) : viewMode === 'gantt' ? (
@@ -446,7 +446,7 @@ function GanttView({ projects, sessions, startDate, endDate }) {
                   <div className="flex items-center gap-2">
                     <span className={`w-3 h-3 rounded-full flex-shrink-0 ${project.color.bg}`}></span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-secondary-900 truncate">{project.project_name}</p>
+                      <p className="font-semibold text-secondary-900 truncate">{project.project_name}</p>
                       <p className="text-xs text-secondary-500">{project.handover_id}</p>
                     </div>
                   </div>
@@ -641,7 +641,7 @@ function GridView({ projects, sessions, startDate, endDate }) {
 
         return (
           <div key={`${monthDate.getFullYear()}-${monthDate.getMonth()}`} className="bg-white rounded-lg border-2 border-secondary-300 p-3">
-            <h3 className="text-sm font-bold text-secondary-900 mb-2 text-center">{monthName}</h3>
+            <h3 className="font-bold text-secondary-900 mb-2 text-center">{monthName}</h3>
             <div className="grid grid-cols-7 gap-0.5">
               {['L', 'M', 'M', 'G', 'V', 'S', 'D'].map((day, idx) => (
                 <div key={idx} className="text-center text-xs font-semibold text-secondary-600 pb-1">
