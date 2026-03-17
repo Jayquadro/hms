@@ -21,7 +21,7 @@ const StatusReport = ({ projectId, onClose }) => {
       setReportData(response.data);
     } catch (err) {
       console.error('Error loading report:', err);
-      setError('Failed to load report data');
+      setError('Errore nel caricamento dei dati del report');
     } finally {
       setLoading(false);
     }
@@ -33,8 +33,8 @@ const StatusReport = ({ projectId, onClose }) => {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('en-US', {
+    if (!dateString) return 'N/D';
+    return new Date(dateString).toLocaleDateString('it-IT', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
@@ -90,7 +90,7 @@ const StatusReport = ({ projectId, onClose }) => {
         <div className="bg-white rounded-lg p-8 max-w-md">
           <div className="flex items-center space-x-3">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <span className="text-lg">Generating report...</span>
+            <span className="text-lg">Caricamento report...</span>
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@ const StatusReport = ({ projectId, onClose }) => {
             onClick={onClose}
             className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
           >
-            Close
+            Chiudi
           </button>
         </div>
       </div>
@@ -124,7 +124,7 @@ const StatusReport = ({ projectId, onClose }) => {
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 flex justify-between items-center print:hidden">
           <div className="flex items-center space-x-3">
             <FileText className="w-6 h-6" />
-            <h2 className="text-2xl font-bold">Handover Status Report</h2>
+            <h2 className="text-2xl font-bold">Report di Stato Handover</h2>
           </div>
           <div className="flex space-x-2">
             <button
@@ -132,7 +132,7 @@ const StatusReport = ({ projectId, onClose }) => {
               className="flex items-center space-x-2 px-4 py-2 bg-white text-blue-600 rounded hover:bg-blue-50 transition"
             >
               <Printer className="w-4 h-4" />
-              <span>Print</span>
+              <span>Stampa</span>
             </button>
             <button
               onClick={onClose}
@@ -168,7 +168,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
               {/* Subtitle */}
               <p className="text-xl text-slate-600 mb-12">
-                Status Report
+                Report di Stato
               </p>
 
               {/* Divider */}
@@ -177,26 +177,68 @@ const StatusReport = ({ projectId, onClose }) => {
               {/* Metadata */}
               <div className="space-y-4 text-slate-700">
                 <div>
-                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">Project ID</p>
-                  <p className="text-lg font-semibold">{project.handover_id || 'N/A'}</p>
+                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">ID Progetto</p>
+                  <p className="text-lg font-semibold">{project.handover_id || 'N/D'}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">Handover Start Date</p>
+                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">Data Inizio Handover</p>
                   <p className="text-lg font-semibold">{formatDate(project.start_date)}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">Prepared By</p>
-                  <p className="text-lg font-semibold">{project.automation_lead || project.rd_lead || 'Project Team'}</p>
+                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">Preparato Da</p>
+                  <p className="text-lg font-semibold">{project.automation_lead || project.rd_lead || 'Team di Progetto'}</p>
                 </div>
               </div>
+
+              {/* Team nel frontespizio - R&D a sinistra, altri a destra */}
+              {teamContacts.length > 0 && (() => {
+                const rdContacts = teamContacts.filter(c => c.department === 'R&D');
+                const otherContacts = teamContacts.filter(c => c.department !== 'R&D');
+                const renderCoverTable = (contacts) => (
+                  <table className="w-full text-xs border border-slate-300 mt-1">
+                    <thead className="bg-slate-100">
+                      <tr>
+                        <th className="px-2 py-1 text-left font-semibold text-slate-600">Reparto</th>
+                        <th className="px-2 py-1 text-left font-semibold text-slate-600">Ruolo</th>
+                        <th className="px-2 py-1 text-left font-semibold text-slate-600">Nome</th>
+                        <th className="px-2 py-1 text-left font-semibold text-slate-600">Email</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {contacts.map((c, i) => (
+                        <tr key={i} className="border-t border-slate-200">
+                          <td className="px-2 py-1 text-slate-700">{c.department}</td>
+                          <td className="px-2 py-1 text-slate-700">{c.role}</td>
+                          <td className="px-2 py-1 font-medium text-slate-800">{c.name}</td>
+                          <td className="px-2 py-1 text-slate-600">{c.email}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                );
+                return (
+                  <div className="mt-8 w-full text-left">
+                    <div className="w-32 h-0.5 bg-slate-300 mb-4"></div>
+                    <p className="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-3">Composizione del Team</p>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        {rdContacts.length > 0 ? renderCoverTable(rdContacts) : <p className="text-xs text-slate-400 italic">Nessun membro R&amp;D</p>}
+                      </div>
+                      <div>
+                        {otherContacts.length > 0 ? renderCoverTable(otherContacts) : <p className="text-xs text-slate-400 italic">Nessun altro membro</p>}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
 
             {/* Bottom section */}
             <div className="flex-1 flex flex-col justify-end pb-12">
               <p className="text-sm text-slate-500">
-                Generated on {formatDate(new Date().toISOString())}
+                Generato il {formatDate(new Date().toISOString())}
               </p>
             </div>
           </div>
@@ -204,15 +246,15 @@ const StatusReport = ({ projectId, onClose }) => {
           {/* Table of Contents */}
           <div className="mb-6 print-page-break-before">
             <h2 className="text-2xl font-bold text-slate-800 mb-4 border-b-2 border-slate-600 pb-2">
-              Table of Contents
+              Indice
             </h2>
             <div className="space-y-2 text-sm">
               <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                <span className="font-medium text-slate-700">1. Project Summary</span>
+                <span className="font-medium text-slate-700">1. Riepilogo Progetto</span>
               </div>
               {teamContacts.length > 0 && (
                 <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                  <span className="font-medium text-slate-700">2. Team Composition</span>
+                  <span className="font-medium text-slate-700">2. Composizione del Team</span>
                 </div>
               )}
               {features && features.length > 0 && (
@@ -222,23 +264,23 @@ const StatusReport = ({ projectId, onClose }) => {
               )}
               {knowledgeSessions.length > 0 && (
                 <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                  <span className="font-medium text-slate-700">4. Knowledge Transfer Calendar</span>
+                  <span className="font-medium text-slate-700">4. Calendario Trasferimento Know-How</span>
                 </div>
               )}
               <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                <span className="font-medium text-slate-700">5. Handover Process Overview</span>
+                <span className="font-medium text-slate-700">5. Panoramica Processo Handover</span>
               </div>
               <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                <span className="font-medium text-slate-700">6. Checklist Status Details</span>
+                <span className="font-medium text-slate-700">6. Dettaglio Stato Checklist</span>
               </div>
               {issues.length > 0 && (
                 <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                  <span className="font-medium text-slate-700">7. Issues & Risks</span>
+                  <span className="font-medium text-slate-700">7. Problemi e Rischi</span>
                 </div>
               )}
               {attachments.length > 0 && (
                 <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                  <span className="font-medium text-slate-700">8. Attachments & Documentation</span>
+                  <span className="font-medium text-slate-700">8. Allegati e Documentazione</span>
                 </div>
               )}
             </div>
@@ -247,7 +289,7 @@ const StatusReport = ({ projectId, onClose }) => {
           {/* COMPACT HEADER: Sections 1-4 Combined */}
           <section className="mb-6 page-break-inside-avoid print-page-break-before">
             <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-slate-600 pb-2">
-              Project Summary
+              Riepilogo Progetto
             </h3>
 
             {/* Two-column layout for compact display */}
@@ -258,40 +300,40 @@ const StatusReport = ({ projectId, onClose }) => {
                 {/* Project Information */}
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
-                    Project Information
+                    Informazioni Progetto
                   </h4>
                   <div className="space-y-2">
                     <div className="flex flex-col md:flex-row gap-2">
                       <div className="flex-1">
-                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Project Name</label>
+                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Nome Progetto</label>
                         <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm font-semibold text-slate-900">
-                          {project.project_name || 'N/A'}
+                          {project.project_name || 'N/D'}
                         </div>
                       </div>
                       <div className="flex-shrink-0">
-                        <label className="block text-xs font-medium text-slate-600 mb-0.5">ID</label>
+                        <label className="block text-xs font-medium text-slate-600 mb-0.5">ID Handover</label>
                         <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
-                          {project.handover_id || 'N/A'}
+                          {project.handover_id || 'N/D'}
                         </div>
                       </div>
                       <div className="flex-shrink-0">
-                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Status</label>
+                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Stato</label>
                         <div className="px-2 py-1.5">
                           <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${getStatusColor(project.status)}`}>
-                            {project.status || 'Active'}
+                            {project.status || 'Attivo'}
                           </span>
                         </div>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Current Phase</label>
+                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Fase Corrente</label>
                         <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
-                          {project.current_phase || 'Phase 1'}
+                          {project.current_phase || 'Fase 1'}
                         </div>
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Project Score</label>
+                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Punteggio Progetto</label>
                         <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm font-semibold text-slate-700">
                           {project.project_score || 0}
                         </div>
@@ -303,22 +345,22 @@ const StatusReport = ({ projectId, onClose }) => {
                 {/* Project Metrics */}
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
-                    Project Metrics
+                    Metriche Progetto
                   </h4>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-0.5">Priority</label>
+                      <label className="block text-xs font-medium text-slate-600 mb-0.5">Priorità</label>
                       <div className="px-2 py-1.5">
                         <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ${getPriorityColor(project.business_priority)}`}>
-                          {project.business_priority || 'Not set'}
+                          {project.business_priority || 'Non impostata'}
                         </span>
                       </div>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-0.5">Complexity</label>
+                      <label className="block text-xs font-medium text-slate-600 mb-0.5">Complessità</label>
                       <div className="px-2 py-1.5">
                         <span className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ${getPriorityColor(project.complexity_level)}`}>
-                          {project.complexity_level || 'Not set'}
+                          {project.complexity_level || 'Non impostata'}
                         </span>
                       </div>
                     </div>
@@ -328,18 +370,18 @@ const StatusReport = ({ projectId, onClose }) => {
                 {/* Project Details */}
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
-                    Project Details
+                    Dettagli Progetto
                   </h4>
                   <div className="space-y-2">
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Machine Family</label>
+                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Famiglia Macchina</label>
                         <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
-                          {project.machine_family || 'Not specified'}
+                          {project.machine_family || 'Non specificata'}
                         </div>
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Deliverable</label>
+                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Deliverable (Voce a Listino)</label>
                         <div className="px-2 py-1.5">
                           {project.deliverable ? (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 text-green-800 rounded text-xs font-semibold">
@@ -354,7 +396,7 @@ const StatusReport = ({ projectId, onClose }) => {
                     </div>
                     {project.description && (
                       <div>
-                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Description</label>
+                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Descrizione</label>
                         <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-xs text-slate-700 leading-relaxed">
                           {project.description}
                         </div>
@@ -362,7 +404,7 @@ const StatusReport = ({ projectId, onClose }) => {
                     )}
                     {project.context_usage && (
                       <div>
-                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Context and Usage</label>
+                        <label className="block text-xs font-medium text-slate-600 mb-0.5">Contesto e Utilizzo</label>
                         <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-xs text-slate-700 leading-relaxed">
                           {project.context_usage}
                         </div>
@@ -374,19 +416,19 @@ const StatusReport = ({ projectId, onClose }) => {
                 {/* Leadership */}
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
-                    Project Leadership
+                    Leadership Progetto
                   </h4>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <label className="block text-xs font-medium text-slate-600 mb-0.5">R&D Lead</label>
                       <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
-                        {project.rd_lead || 'Not assigned'}
+                        {project.rd_lead || 'Non assegnato'}
                       </div>
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-slate-600 mb-0.5">Automation Lead</label>
                       <div className="px-2 py-1.5 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700">
-                        {project.automation_lead || 'Not assigned'}
+                        {project.automation_lead || 'Non assegnato'}
                       </div>
                     </div>
                   </div>
@@ -397,7 +439,7 @@ const StatusReport = ({ projectId, onClose }) => {
               <div>
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
-                    Progress Statistics
+                    Statistiche Avanzamento
                   </h4>
                   <div className="grid grid-cols-2 gap-3">
 
@@ -405,9 +447,9 @@ const StatusReport = ({ projectId, onClose }) => {
                     <div className="bg-slate-50 border border-slate-200 rounded p-3">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <p className="text-xs text-slate-600 font-medium mb-1">Checklist</p>
+                          <p className="text-xs text-slate-600 font-medium mb-1">Avanzamento Checklist</p>
                           <p className="text-xl font-bold text-slate-800 leading-none">{statistics.checklist.completed}/{statistics.checklist.total}</p>
-                          <p className="text-xs text-emerald-600 font-medium mt-1">{statistics.checklist.completionPercentage}% Done</p>
+                          <p className="text-xs text-emerald-600 font-medium mt-1">{statistics.checklist.completionPercentage}% Completato</p>
                         </div>
                         <CheckCircle className="w-5 h-5 text-emerald-500 opacity-50" />
                       </div>
@@ -417,9 +459,9 @@ const StatusReport = ({ projectId, onClose }) => {
                     <div className="bg-slate-50 border border-slate-200 rounded p-3">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <p className="text-xs text-slate-600 font-medium mb-1">Sessions</p>
+                          <p className="text-xs text-slate-600 font-medium mb-1">Sessioni</p>
                           <p className="text-xl font-bold text-slate-800 leading-none">{statistics.knowledge.completed}/{statistics.knowledge.total}</p>
-                          <p className="text-xs text-blue-600 font-medium mt-1">Completed</p>
+                          <p className="text-xs text-blue-600 font-medium mt-1">Completate</p>
                         </div>
                         <Users className="w-5 h-5 text-blue-500 opacity-50" />
                       </div>
@@ -429,9 +471,9 @@ const StatusReport = ({ projectId, onClose }) => {
                     <div className="bg-slate-50 border border-slate-200 rounded p-3">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <p className="text-xs text-slate-600 font-medium mb-1">Open Issues</p>
+                          <p className="text-xs text-slate-600 font-medium mb-1">Problemi Aperti</p>
                           <p className="text-xl font-bold text-slate-800 leading-none">{statistics.issues.open + statistics.issues.inProgress}</p>
-                          <p className="text-xs text-amber-600 font-medium mt-1">of {statistics.issues.total} total</p>
+                          <p className="text-xs text-amber-600 font-medium mt-1">su {statistics.issues.total} totali</p>
                         </div>
                         <AlertTriangle className="w-5 h-5 text-amber-500 opacity-50" />
                       </div>
@@ -441,7 +483,7 @@ const StatusReport = ({ projectId, onClose }) => {
                     <div className="bg-slate-50 border border-slate-200 rounded p-3">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <p className="text-xs text-slate-600 font-medium mb-1">Files</p>
+                          <p className="text-xs text-slate-600 font-medium mb-1">File Allegati</p>
                           <p className="text-xl font-bold text-slate-800 leading-none">{statistics.attachments.total}</p>
                           <p className="text-xs text-slate-600 font-medium mt-1">{formatFileSize(statistics.attachments.totalSize)}</p>
                         </div>
@@ -460,10 +502,10 @@ const StatusReport = ({ projectId, onClose }) => {
               <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200 flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-4 h-4 text-slate-600" />
-                  <span>Project Timeline</span>
+                  <span>Cronologia Progetto</span>
                 </div>
                 <span className={`text-xs font-semibold ${project.daysRemaining < 0 ? 'text-red-600' : project.daysRemaining < 7 ? 'text-amber-600' : 'text-emerald-600'}`}>
-                  {project.daysRemaining !== null ? `${project.daysRemaining} days remaining` : ''}
+                  {project.daysRemaining !== null ? `${project.daysRemaining} giorni rimanenti` : ''}
                 </span>
               </h4>
 
@@ -514,7 +556,7 @@ const StatusReport = ({ projectId, onClose }) => {
                               >
                                 <div className="w-px h-3 bg-slate-400 opacity-40"></div>
                                 <div className="mt-0.5 text-[9px] text-slate-500 opacity-70 whitespace-nowrap">
-                                  {currentDate.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' })}
+                                  {currentDate.toLocaleDateString('it-IT', { month: 'short', year: '2-digit' })}
                                 </div>
                               </div>
                             );
@@ -532,7 +574,7 @@ const StatusReport = ({ projectId, onClose }) => {
                         <div className="w-0.5 h-3 bg-red-600"></div>
                         <div className="w-3 h-3 bg-red-600 rounded-full border-2 border-white shadow-md"></div>
                         <div className="mt-1 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded whitespace-nowrap">
-                          TODAY
+                          OGGI
                         </div>
                       </div>
                     </div>
@@ -540,15 +582,15 @@ const StatusReport = ({ projectId, onClose }) => {
                     {/* Date Labels */}
                     <div className="flex justify-between items-center mt-8 text-xs">
                       <div className="text-left">
-                        <div className="text-slate-500 font-medium">Start</div>
+                        <div className="text-slate-500 font-medium">Inizio</div>
                         <div className="text-sm font-semibold text-slate-900">{formatDate(project.start_date)}</div>
                       </div>
                       <div className="text-center bg-emerald-50 px-3 py-1 rounded">
-                        <div className="text-slate-500 font-medium">Duration</div>
-                        <div className="text-sm font-semibold text-slate-900">{totalDays} days</div>
+                        <div className="text-slate-500 font-medium">Durata</div>
+                        <div className="text-sm font-semibold text-slate-900">{totalDays} giorni</div>
                       </div>
                       <div className="text-right">
-                        <div className="text-slate-500 font-medium">Target</div>
+                        <div className="text-slate-500 font-medium">Obiettivo</div>
                         <div className="text-sm font-semibold text-slate-900">{formatDate(project.target_date)}</div>
                       </div>
                     </div>
@@ -562,12 +604,12 @@ const StatusReport = ({ projectId, onClose }) => {
                   {project.completionPercentage >= (project.daysRemaining !== null ? Math.round(((new Date() - new Date(project.start_date)) / (new Date(project.target_date) - new Date(project.start_date))) * 100) : 0) ? (
                     <>
                       <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                      <span className="text-xs font-medium text-emerald-800">On Track - Work progress ({project.completionPercentage}%) is ahead of schedule</span>
+                      <span className="text-xs font-medium text-emerald-800">In Anticipo - Avanzamento lavori ({project.completionPercentage}%) è in anticipo rispetto alla pianificazione</span>
                     </>
                   ) : (
                     <>
                       <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0" />
-                      <span className="text-xs font-medium text-amber-800">Behind Schedule - Work progress ({project.completionPercentage}%) is behind timeline</span>
+                      <span className="text-xs font-medium text-amber-800">In Ritardo - Avanzamento lavori ({project.completionPercentage}%) è in ritardo rispetto alla pianificazione</span>
                     </>
                   )}
                 </div>
@@ -575,22 +617,22 @@ const StatusReport = ({ projectId, onClose }) => {
             </div>
           </section>
 
-          {/* Team Composition - Moved here for better organization */}
+          {/* Team Composition */}
           {teamContacts.length > 0 && (
             <section className="mb-6 page-break-inside-avoid">
               <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2 flex items-center">
                 <Users className="w-5 h-5 mr-2" />
-                Team Composition
+                Composizione del Team
               </h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-200 text-sm">
                   <thead className="bg-gray-100">
                     <tr>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Department</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Role</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Name</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Reparto</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Ruolo</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Nome</th>
                       <th className="px-3 py-2 text-left text-xs font-semibold">Email</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Phone</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Telefono</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -629,7 +671,7 @@ const StatusReport = ({ projectId, onClose }) => {
                           #{idx + 1}
                         </span>
                         <h4 className="text-lg font-semibold text-secondary-900">
-                          {feature.feature_name || 'Unnamed Feature'}
+                          {feature.feature_name || 'Funzionalità senza nome'}
                         </h4>
                       </div>
 
@@ -679,7 +721,7 @@ const StatusReport = ({ projectId, onClose }) => {
               {/* Features Summary */}
               <div className="mt-4 bg-purple-50 border border-purple-200 rounded-lg p-3 text-center page-break-inside-avoid">
                 <p className="text-sm text-secondary-600">
-                  Total Features Documented: <span className="font-bold text-purple-700">{features.length}</span>
+                  Funzionalità totali documentate: <span className="font-bold text-purple-700">{features.length}</span>
                 </p>
               </div>
             </section>
@@ -690,26 +732,26 @@ const StatusReport = ({ projectId, onClose }) => {
             <section className="mb-6 print-page-break-before">
               <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2 flex items-center">
                 <Calendar className="w-5 h-5 mr-2" />
-                Knowledge Transfer Calendar
+                Calendario Trasferimento Know-How
               </h3>
 
               {/* Calendar Legend */}
               <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded bg-blue-50 border-2 border-blue-300"></div>
-                  <span className="text-secondary-600">Has Sessions</span>
+                  <span className="text-secondary-600">Con Sessioni</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded bg-green-100 border border-green-400"></div>
-                  <span className="text-secondary-600">Completed</span>
+                  <span className="text-secondary-600">Completate</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded bg-yellow-100 border border-yellow-400"></div>
-                  <span className="text-secondary-600">Scheduled</span>
+                  <span className="text-secondary-600">Pianificate</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded bg-red-100 border border-red-400"></div>
-                  <span className="text-secondary-600">Cancelled</span>
+                  <span className="text-secondary-600">Annullate</span>
                 </div>
               </div>
 
@@ -749,8 +791,8 @@ const StatusReport = ({ projectId, onClose }) => {
                   })
                   .sort((a, b) => a - b);
 
-                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu',
+                                    'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
                 const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
                 return (
@@ -830,7 +872,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
                     {/* Sessions List Below Calendar */}
                     <div className="mt-4 pt-4 border-t border-secondary-200">
-                      <h4 className="text-sm font-semibold text-secondary-900 mb-3">Session Details</h4>
+                      <h4 className="text-sm font-semibold text-secondary-900 mb-3">Dettaglio Sessioni</h4>
                       <div className="space-y-2">
                         {knowledgeSessions
                           .sort((a, b) => new Date(a.scheduled_date) - new Date(b.scheduled_date))
@@ -867,17 +909,17 @@ const StatusReport = ({ projectId, onClose }) => {
               {/* Summary Stats */}
               <div className="mt-4 grid grid-cols-3 gap-3 page-break-inside-avoid">
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
-                  <p className="text-xs text-secondary-600 mb-1">Total Sessions</p>
+                  <p className="text-xs text-secondary-600 mb-1">Sessioni Totali</p>
                   <p className="text-2xl font-bold text-blue-700">{knowledgeSessions.length}</p>
                 </div>
                 <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
-                  <p className="text-xs text-secondary-600 mb-1">Completed</p>
+                  <p className="text-xs text-secondary-600 mb-1">Completate</p>
                   <p className="text-2xl font-bold text-green-700">
                     {knowledgeSessions.filter(s => s.status === 'Completed').length}
                   </p>
                 </div>
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-center">
-                  <p className="text-xs text-secondary-600 mb-1">Scheduled</p>
+                  <p className="text-xs text-secondary-600 mb-1">Pianificate</p>
                   <p className="text-2xl font-bold text-yellow-700">
                     {knowledgeSessions.filter(s => s.status === 'Scheduled').length}
                   </p>
@@ -889,7 +931,7 @@ const StatusReport = ({ projectId, onClose }) => {
           {/* SECTION 2: Phase Breakdown - Matching Overview tab style */}
           <section className="mb-6 print-page-break-before">
             <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2">
-              Handover Process Overview
+              Panoramica Processo Handover
             </h3>
             {Object.keys(statistics.phases).length > 0 ? (
               <div className="bg-white rounded shadow-sm border border-slate-200 p-4">
@@ -898,22 +940,22 @@ const StatusReport = ({ projectId, onClose }) => {
                     // Define phase metadata
                     const phaseMetadata = {
                       'Phase 1': {
-                        activities: 'Prerequisites completion, documentation review, initial assessment',
-                        criteria: 'All technical and documentation requirements met'
+                        activities: 'Completamento prerequisiti, revisione documentazione, valutazione iniziale',
+                        criteria: 'Tutti i requisiti tecnici e documentali soddisfatti'
                       },
                       'Phase 2': {
-                        activities: 'Training sessions, hands-on activities, shadow support',
-                        criteria: 'Team demonstrates competency in system operation'
+                        activities: 'Sessioni di formazione, attività pratiche, supporto in affiancamento',
+                        criteria: 'Il team dimostra competenza nell\'operatività del sistema'
                       },
                       'Phase 3': {
-                        activities: 'Approvals, documentation handover, transition activities',
-                        criteria: 'All sign-offs completed and access transferred'
+                        activities: 'Approvazioni, consegna documentazione, attività di transizione',
+                        criteria: 'Tutte le firme completate e accessi trasferiti'
                       }
                     };
 
                     return Object.entries(statistics.phases).map(([phase, stats], index) => {
                       const phaseName = phaseNames.find(p => p.phase_id === phase)?.phase_name || phase;
-                      const metadata = phaseMetadata[phase] || { activities: 'Phase activities', criteria: 'Phase criteria' };
+                      const metadata = phaseMetadata[phase] || { activities: 'Attività di fase', criteria: 'Criteri di fase' };
 
                       // Determine status based on progress
                       const status = stats.percentage === 100 ? 'complete' :
@@ -964,11 +1006,11 @@ const StatusReport = ({ projectId, onClose }) => {
                               {/* Key Activities and Success Criteria */}
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                                 <div>
-                                  <span className="font-medium text-slate-700">Key Activities:</span>
+                                  <span className="font-medium text-slate-700">Attività Principali:</span>
                                   <p className="text-slate-600 mt-0.5">{metadata.activities}</p>
                                 </div>
                                 <div>
-                                  <span className="font-medium text-slate-700">Success Criteria:</span>
+                                  <span className="font-medium text-slate-700">Criteri di Successo:</span>
                                   <p className="text-slate-600 mt-0.5">{metadata.criteria}</p>
                                 </div>
                               </div>
@@ -977,16 +1019,16 @@ const StatusReport = ({ projectId, onClose }) => {
                               <div className="mt-2 pt-2 border-t border-slate-200">
                                 <div className="flex flex-wrap gap-3 text-xs">
                                   <span className="text-slate-600">
-                                    <span className="font-medium">Total:</span> {stats.total}
+                                    <span className="font-medium">Totale:</span> {stats.total}
                                   </span>
                                   <span className="text-emerald-600">
-                                    <span className="font-medium">Complete:</span> {stats.completed}
+                                    <span className="font-medium">Completati:</span> {stats.completed}
                                   </span>
                                   <span className="text-blue-600">
-                                    <span className="font-medium">In Progress:</span> {stats.inProgress}
+                                    <span className="font-medium">In Corso:</span> {stats.inProgress}
                                   </span>
                                   <span className="text-slate-500">
-                                    <span className="font-medium">Not Started:</span> {stats.notStarted}
+                                    <span className="font-medium">Non Avviati:</span> {stats.notStarted}
                                   </span>
                                 </div>
                               </div>
@@ -999,14 +1041,14 @@ const StatusReport = ({ projectId, onClose }) => {
                 </div>
               </div>
             ) : (
-              <p className="text-secondary-500 italic">No phase data available</p>
+              <p className="text-secondary-500 italic">Nessun dato di fase disponibile</p>
             )}
           </section>
 
           {/* SECTION 3: Checklist Details */}
           <section className="mb-6 print-page-break-before">
             <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2">
-              Checklist Status Details
+              Dettaglio Stato Checklist
             </h3>
             {Object.keys(checklistByPhase).length > 0 ? (
               <div className="space-y-6">
@@ -1022,11 +1064,11 @@ const StatusReport = ({ projectId, onClose }) => {
                             <table className="min-w-full bg-white border border-gray-200 text-sm">
                               <thead className="bg-gray-50">
                                 <tr>
-                                  <th className="px-3 py-2 text-left text-xs font-semibold">Requirement</th>
-                                  <th className="px-3 py-2 text-left text-xs font-semibold">Status</th>
-                                  <th className="px-3 py-2 text-left text-xs font-semibold">Verified By</th>
-                                  <th className="px-3 py-2 text-left text-xs font-semibold">Date</th>
-                                  <th className="px-3 py-2 text-left text-xs font-semibold">Notes</th>
+                                  <th className="px-3 py-2 text-left text-xs font-semibold">Requisito</th>
+                                  <th className="px-3 py-2 text-left text-xs font-semibold">Stato</th>
+                                  <th className="px-3 py-2 text-left text-xs font-semibold">Verificato Da</th>
+                                  <th className="px-3 py-2 text-left text-xs font-semibold">Data</th>
+                                  <th className="px-3 py-2 text-left text-xs font-semibold">Note</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -1053,7 +1095,7 @@ const StatusReport = ({ projectId, onClose }) => {
                 })}
               </div>
             ) : (
-              <p className="text-secondary-500 italic">No checklist items available</p>
+              <p className="text-secondary-500 italic">Nessun elemento checklist disponibile</p>
             )}
           </section>
 
@@ -1061,18 +1103,18 @@ const StatusReport = ({ projectId, onClose }) => {
           {issues.length > 0 && (
             <section className="mb-6 print-page-break-before">
               <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2">
-                Issues & Risks
+                Problemi e Rischi
               </h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-200 text-sm">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Issue ID</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Priority</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Description</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Assigned To</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Status</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Target Date</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">ID Problema</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Priorità</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Descrizione</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Assegnato A</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Stato</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Data Obiettivo</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1104,18 +1146,18 @@ const StatusReport = ({ projectId, onClose }) => {
           {attachments.length > 0 && (
             <section className="mb-6 print-page-break-before">
               <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2">
-                Attachments & Documentation
+                Allegati e Documentazione
               </h3>
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-200 text-sm">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">File Name</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Size</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Type</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Description</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Uploaded By</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Date</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Nome File</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Dimensione</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Tipo</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Descrizione</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Caricato Da</th>
+                      <th className="px-3 py-2 text-left text-xs font-semibold">Data</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1137,8 +1179,8 @@ const StatusReport = ({ projectId, onClose }) => {
 
           {/* Report Footer */}
           <div className="mt-12 pt-6 border-t-2 border-gray-300 text-center text-sm text-secondary-500">
-            <p>End of Handover Status Report</p>
-            <p className="mt-2">Generated by Handover Management System on {formatDate(new Date().toISOString())}</p>
+            <p>Fine del Report di Stato Handover</p>
+            <p className="mt-2">Generato da Handover Management System il {formatDate(new Date().toISOString())}</p>
           </div>
         </div>
       </div>

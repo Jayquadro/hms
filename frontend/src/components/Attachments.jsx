@@ -57,7 +57,7 @@ const Attachments = ({ projectId }) => {
       await loadAttachments();
     } catch (error) {
       console.error('Error uploading files:', error);
-      alert('Error uploading files. Please try again.');
+      alert('Errore durante il caricamento. Riprova.');
     } finally {
       setUploading(false);
     }
@@ -84,7 +84,7 @@ const Attachments = ({ projectId }) => {
       }
     } catch (error) {
       console.error('Error deleting attachment:', error);
-      alert('Error deleting file. Please try again.');
+      alert('Errore durante l\'eliminazione. Riprova.');
     }
   };
 
@@ -112,7 +112,7 @@ const Attachments = ({ projectId }) => {
       }
     } catch (error) {
       console.error('Error downloading file:', error);
-      alert('Error downloading file. Please try again.');
+      alert('Errore durante il download. Riprova.');
     }
   };
 
@@ -179,13 +179,13 @@ const Attachments = ({ projectId }) => {
                 <Trash2 className="w-6 h-6 text-red-600" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-secondary-900">Delete Attachment?</h3>
-                <p className="text-sm text-secondary-500">This action cannot be undone</p>
+                <h3 className="text-sm font-semibold text-secondary-900">Eliminare l'allegato?</h3>
+                <p className="text-sm text-secondary-500">Questa azione non può essere annullata</p>
               </div>
             </div>
 
             <div className="bg-gray-50 rounded p-4 mb-4">
-              <p className="text-sm text-secondary-700 mb-2">You are about to delete:</p>
+              <p className="text-sm text-secondary-700 mb-2">Stai per eliminare:</p>
               <p className="font-semibold text-secondary-900">{attachmentToDelete?.original_name}</p>
               <p className="text-sm text-secondary-600 mt-1">
                 {attachmentToDelete?.file_size && formatFileSize(attachmentToDelete.file_size)}
@@ -197,14 +197,14 @@ const Attachments = ({ projectId }) => {
                 onClick={handleDeleteCancel}
                 className="flex-1 px-4 py-2 border border-gray-300 text-secondary-700 rounded hover:bg-gray-50 transition-colors"
               >
-                Cancel
+                Annulla
               </button>
               <button
                 onClick={handleDeleteConfirm}
                 className="flex-1 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
               >
                 <Trash2 className="w-4 h-4" />
-                Delete
+                Elimina
               </button>
             </div>
           </div>
@@ -215,9 +215,9 @@ const Attachments = ({ projectId }) => {
       <div className="bg-white rounded shadow-sm border border-gray-200 p-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-base font-bold text-secondary-900">Attachments</h1>
+            <h1 className="text-base font-bold text-secondary-900">Allegati</h1>
             <p className="text-sm text-secondary-600 mt-1">
-              Upload and manage project documents and files
+              Carica e gestisci documenti e file del progetto
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -244,10 +244,10 @@ const Attachments = ({ projectId }) => {
         <div className="text-center">
           <Upload className={`w-12 h-12 mx-auto mb-4 ${dragActive ? 'text-blue-600' : 'text-gray-400'}`} />
           <h3 className="text-sm font-semibold text-secondary-900 mb-2">
-            {uploading ? 'Uploading...' : 'Upload Files'}
+            {uploading ? 'Caricamento in corso...' : 'Carica file'}
           </h3>
           <p className="text-sm text-secondary-600 mb-4">
-            Drag and drop files here, or click to browse
+            Trascina i file qui, o clicca per sfogliare
           </p>
           <label className="inline-block">
             <input
@@ -259,11 +259,11 @@ const Attachments = ({ projectId }) => {
             />
             <span className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors cursor-pointer inline-flex items-center gap-2">
               <Upload className="w-4 h-4" />
-              {uploading ? 'Uploading...' : 'Choose Files'}
+              {uploading ? 'Caricamento in corso...' : 'Scegli file'}
             </span>
           </label>
           <p className="text-xs text-secondary-500 mt-4">
-            Supported formats: PDF, Word, Excel, Images, and more
+            Formati supportati: PDF, Word, Excel, Immagini e altro
           </p>
         </div>
       </div>
@@ -272,9 +272,9 @@ const Attachments = ({ projectId }) => {
       {attachments.length === 0 ? (
         <div className="bg-white rounded shadow-sm border border-gray-200 p-12 text-center">
           <Paperclip className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-sm font-semibold text-secondary-600 mb-2">No Attachments Yet</h3>
+          <h3 className="text-sm font-semibold text-secondary-600 mb-2">Nessun allegato presente</h3>
           <p className="text-secondary-500">
-            Upload documents, images, or any files related to this project
+            Carica documenti, immagini o qualsiasi file relativo a questo progetto
           </p>
         </div>
       ) : (
@@ -304,7 +304,7 @@ const Attachments = ({ projectId }) => {
                           })}
                         </span>
                         {attachment.uploaded_by && (
-                          <span>by {attachment.uploaded_by}</span>
+                          <span>da {attachment.uploaded_by}</span>
                         )}
                       </div>
                     </div>
@@ -313,14 +313,14 @@ const Attachments = ({ projectId }) => {
                     <button
                       onClick={() => handleDownload(attachment)}
                       className="p-2 text-blue-600 hover:bg-blue-50 rounded transition-colors"
-                      title="Download"
+                      title="Scarica"
                     >
                       <Download className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => handleDeleteClick(attachment)}
                       className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors"
-                      title="Delete"
+                      title="Elimina"
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>
