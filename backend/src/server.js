@@ -147,7 +147,8 @@ app.get('/api/projects/:id/report', async (req, res) => {
       teamContacts,
       attachments,
       phaseNames,
-      features
+      features,
+      criticalities
     ] = await Promise.all([
       db.getAsync('SELECT * FROM projects WHERE id = ?', [projectId]),
       db.allAsync('SELECT * FROM checklist_items WHERE project_id = ? ORDER BY phase, category, id', [projectId]),
@@ -156,7 +157,8 @@ app.get('/api/projects/:id/report', async (req, res) => {
       db.allAsync('SELECT * FROM team_contacts WHERE project_id = ? ORDER BY department, role', [projectId]),
       db.allAsync('SELECT id, file_name, original_name, file_size, mime_type, description, uploaded_by, uploaded_at FROM attachments WHERE project_id = ? ORDER BY uploaded_at DESC', [projectId]),
       db.allAsync('SELECT * FROM phase_names WHERE project_id = ? ORDER BY phase_id', [projectId]),
-      db.allAsync('SELECT * FROM features WHERE project_id = ? ORDER BY created_at DESC', [projectId])
+      db.allAsync('SELECT * FROM features WHERE project_id = ? ORDER BY created_at DESC', [projectId]),
+      db.allAsync('SELECT * FROM project_criticalities WHERE project_id = ? ORDER BY created_at', [projectId])
     ]);
 
     if (!project) {
@@ -246,7 +248,8 @@ app.get('/api/projects/:id/report', async (req, res) => {
       issues,
       attachments,
       phaseNames,
-      features
+      features,
+      criticalities
     };
 
     res.json(report);

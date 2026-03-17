@@ -115,7 +115,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
   if (!reportData) return null;
 
-  const { project, statistics, teamContacts, checklistByPhase, knowledgeSessions, issues, attachments, phaseNames, features } = reportData;
+  const { project, statistics, teamContacts, checklistByPhase, knowledgeSessions, issues, attachments, phaseNames, features, criticalities } = reportData;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-auto p-4">
@@ -146,14 +146,9 @@ const StatusReport = ({ projectId, onClose }) => {
         {/* Report Content */}
         <div ref={reportRef} className="report-content flex-1 overflow-auto p-8 print:p-4">
           {/* Frontispiece - Cover Page for Print */}
-          <div className="hidden print:flex print:flex-col print:justify-center print:items-center print:min-h-screen print:page-break-after-always text-center">
-            {/* Top spacing */}
-            <div className="flex-1"></div>
-
-            {/* Main content */}
-            <div className="flex-1 flex flex-col justify-center">
-              {/* Document Type */}
-              <div className="mb-8">
+          <div className="hidden print:flex print:flex-col print:page-break-after-always text-center">
+            {/* Document Type */}
+              <div className="mb-4">
                 <div className="inline-block px-6 py-2 border-2 border-slate-300 rounded-lg">
                   <p className="text-sm uppercase tracking-widest text-slate-600 font-semibold">
                     Handover Management System
@@ -167,35 +162,38 @@ const StatusReport = ({ projectId, onClose }) => {
               </h1>
 
               {/* Subtitle */}
-              <p className="text-xl text-slate-600 mb-12">
-                Report di Stato
+              <p className="text-xl text-slate-600 mb-5">
+                Report di Rilascio Progetto
               </p>
 
               {/* Divider */}
-              <div className="w-32 h-1 bg-slate-600 mx-auto mb-12"></div>
+              <div className="w-32 h-1 bg-slate-600 mx-auto mb-5"></div>
 
               {/* Metadata */}
-              <div className="space-y-4 text-slate-700">
+              <div className="space-y-2 text-slate-700">
                 <div>
                   <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">ID Progetto</p>
                   <p className="text-lg font-semibold">{project.handover_id || 'N/D'}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">Data Inizio Handover</p>
-                  <p className="text-lg font-semibold">{formatDate(project.start_date)}</p>
-                </div>
-
-                <div>
-                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">Preparato Da</p>
-                  <p className="text-lg font-semibold">{project.automation_lead || project.rd_lead || 'Team di Progetto'}</p>
+                  <p className="text-sm uppercase tracking-wide text-slate-500 mb-1">Date Rilascio</p>
+                  <p className="text-lg font-semibold">{formatDate(project.start_date)} — {formatDate(project.target_date)}</p>
                 </div>
               </div>
 
               {/* Team nel frontespizio - R&D a sinistra, altri a destra */}
               {teamContacts.length > 0 && (() => {
-                const rdContacts = teamContacts.filter(c => c.department === 'R&D');
-                const otherContacts = teamContacts.filter(c => c.department !== 'R&D');
+                const leaderNames = [project.rd_lead, project.automation_lead].filter(Boolean).map(n => n?.toLowerCase());
+                const sortByLeader = (a, b) => {
+                  const aL = leaderNames.includes(a.name?.toLowerCase());
+                  const bL = leaderNames.includes(b.name?.toLowerCase());
+                  if (aL && !bL) return -1;
+                  if (!aL && bL) return 1;
+                  return 0;
+                };
+                const rdContacts = teamContacts.filter(c => c.department === 'R&D').sort(sortByLeader);
+                const otherContacts = teamContacts.filter(c => c.department !== 'R&D').sort(sortByLeader);
                 const renderCoverTable = (contacts) => (
                   <table className="w-full text-xs border border-slate-300 mt-1">
                     <thead className="bg-slate-100">
@@ -219,7 +217,7 @@ const StatusReport = ({ projectId, onClose }) => {
                   </table>
                 );
                 return (
-                  <div className="mt-8 w-full text-left">
+                  <div className="mt-4 w-full text-left">
                     <div className="w-32 h-0.5 bg-slate-300 mb-4"></div>
                     <p className="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-3">Composizione del Team</p>
                     <div className="grid grid-cols-2 gap-4">
@@ -233,61 +231,49 @@ const StatusReport = ({ projectId, onClose }) => {
                   </div>
                 );
               })()}
-            </div>
-
-            {/* Bottom section */}
-            <div className="flex-1 flex flex-col justify-end pb-12">
-              <p className="text-sm text-slate-500">
-                Generato il {formatDate(new Date().toISOString())}
-              </p>
-            </div>
-          </div>
-
-          {/* Table of Contents */}
-          <div className="mb-6 print-page-break-before">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4 border-b-2 border-slate-600 pb-2">
-              Indice
-            </h2>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                <span className="font-medium text-slate-700">1. Riepilogo Progetto</span>
+            {/* TOC nel frontespizio */}
+            <div className="mt-5 w-full text-left">
+              <div className="w-full h-0.5 bg-slate-200 mb-2"></div>
+              <p className="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-2">Indice</p>
+              <div className="flex flex-col gap-0 text-sm">
+                <div className="flex items-center py-0.5 border-b border-dotted border-slate-300">
+                  <span className="font-medium text-slate-700">1. Riepilogo Progetto</span>
+                </div>
+                {features && features.length > 0 && (
+                  <div className="flex items-center py-0.5 border-b border-dotted border-slate-300">
+                    <span className="font-medium text-slate-700">2. Specifiche Funzionalità</span>
+                  </div>
+                )}
+                {(project.osservazioni_note || project.azioni_correttive || (criticalities && criticalities.length > 0)) && (
+                  <div className="flex items-center py-0.5 border-b border-dotted border-slate-300">
+                    <span className="font-medium text-slate-700">3. Osservazioni, Note e Criticità</span>
+                  </div>
+                )}
+                <div className="flex items-center py-0.5 border-b border-dotted border-slate-300">
+                  <span className="font-medium text-slate-700">4. Panoramica Processo Handover</span>
+                </div>
+                <div className="flex items-center py-0.5 border-b border-dotted border-slate-300">
+                  <span className="font-medium text-slate-700">5. Dettaglio Stato Checklist</span>
+                </div>
+                {issues.length > 0 && (
+                  <div className="flex items-center py-0.5 border-b border-dotted border-slate-300">
+                    <span className="font-medium text-slate-700">6. Problemi e Rischi</span>
+                  </div>
+                )}
+                {attachments.length > 0 && (
+                  <div className="flex items-center py-0.5 border-b border-dotted border-slate-300">
+                    <span className="font-medium text-slate-700">7. Allegati e Documentazione</span>
+                  </div>
+                )}
               </div>
-              {teamContacts.length > 0 && (
-                <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                  <span className="font-medium text-slate-700">2. Composizione del Team</span>
-                </div>
-              )}
-              {features && features.length > 0 && (
-                <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                  <span className="font-medium text-slate-700">3. Specifiche Funzionalità</span>
-                </div>
-              )}
-              {knowledgeSessions.length > 0 && (
-                <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                  <span className="font-medium text-slate-700">4. Calendario Trasferimento Know-How</span>
-                </div>
-              )}
-              <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                <span className="font-medium text-slate-700">5. Panoramica Processo Handover</span>
-              </div>
-              <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                <span className="font-medium text-slate-700">6. Dettaglio Stato Checklist</span>
-              </div>
-              {issues.length > 0 && (
-                <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                  <span className="font-medium text-slate-700">7. Problemi e Rischi</span>
-                </div>
-              )}
-              {attachments.length > 0 && (
-                <div className="flex items-center justify-between py-1 border-b border-dotted border-slate-300">
-                  <span className="font-medium text-slate-700">8. Allegati e Documentazione</span>
-                </div>
-              )}
             </div>
+            <p className="text-xs text-slate-500 mt-4">
+              Generato il {formatDate(new Date().toISOString())}
+            </p>
           </div>
 
           {/* COMPACT HEADER: Sections 1-4 Combined */}
-          <section className="mb-6 page-break-inside-avoid print-page-break-before">
+          <section className="mb-6 page-break-inside-avoid">
             <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-slate-600 pb-2">
               Riepilogo Progetto
             </h3>
@@ -436,7 +422,7 @@ const StatusReport = ({ projectId, onClose }) => {
               </div>
 
               {/* Right Column: Statistics Grid - Clean style matching Overview tab */}
-              <div>
+              <div className="print:hidden">
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
                     Statistiche Avanzamento
@@ -568,7 +554,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
                       {/* Today Marker */}
                       <div
-                        className="absolute top-0 flex flex-col items-center z-10"
+                        className="absolute top-0 flex flex-col items-center z-10 print:hidden"
                         style={{ left: `${timeProgress}%`, transform: 'translateX(-50%)' }}
                       >
                         <div className="w-0.5 h-3 bg-red-600"></div>
@@ -599,7 +585,7 @@ const StatusReport = ({ projectId, onClose }) => {
               })()}
 
               {/* Status Indicator */}
-              <div className={`mt-3 p-2 rounded ${project.completionPercentage >= (project.daysRemaining !== null ? Math.round(((new Date() - new Date(project.start_date)) / (new Date(project.target_date) - new Date(project.start_date))) * 100) : 0) ? 'bg-emerald-50' : 'bg-amber-50'}`}>
+              <div className={`mt-3 p-2 rounded print:hidden ${project.completionPercentage >= (project.daysRemaining !== null ? Math.round(((new Date() - new Date(project.start_date)) / (new Date(project.target_date) - new Date(project.start_date))) * 100) : 0) ? 'bg-emerald-50' : 'bg-amber-50'}`}>
                 <div className="flex items-center gap-2">
                   {project.completionPercentage >= (project.daysRemaining !== null ? Math.round(((new Date() - new Date(project.start_date)) / (new Date(project.target_date) - new Date(project.start_date))) * 100) : 0) ? (
                     <>
@@ -618,42 +604,52 @@ const StatusReport = ({ projectId, onClose }) => {
           </section>
 
           {/* Team Composition */}
-          {teamContacts.length > 0 && (
-            <section className="mb-6 page-break-inside-avoid">
-              <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2 flex items-center">
-                <Users className="w-5 h-5 mr-2" />
-                Composizione del Team
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200 text-sm">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Reparto</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Ruolo</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Nome</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Email</th>
-                      <th className="px-3 py-2 text-left text-xs font-semibold">Telefono</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {teamContacts.map((contact, idx) => (
-                      <tr key={idx} className="border-t border-gray-200">
-                        <td className="px-3 py-2">{contact.department}</td>
-                        <td className="px-3 py-2">{contact.role}</td>
-                        <td className="px-3 py-2 font-medium">{contact.name}</td>
-                        <td className="px-3 py-2">{contact.email}</td>
-                        <td className="px-3 py-2">{contact.phone}</td>
+          {teamContacts.length > 0 && (() => {
+            const leaderNamesBody = [project.rd_lead, project.automation_lead].filter(Boolean).map(n => n?.toLowerCase());
+            const sortedTeamBody = [...teamContacts].sort((a, b) => {
+              const aL = leaderNamesBody.includes(a.name?.toLowerCase());
+              const bL = leaderNamesBody.includes(b.name?.toLowerCase());
+              if (aL && !bL) return -1;
+              if (!aL && bL) return 1;
+              return 0;
+            });
+            return (
+              <section className="mb-6 page-break-inside-avoid print:hidden">
+                <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2 flex items-center">
+                  <Users className="w-5 h-5 mr-2" />
+                  Composizione del Team
+                </h3>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full bg-white border border-gray-200 text-sm">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="px-3 py-2 text-left text-xs font-semibold">Reparto</th>
+                        <th className="px-3 py-2 text-left text-xs font-semibold">Ruolo</th>
+                        <th className="px-3 py-2 text-left text-xs font-semibold">Nome</th>
+                        <th className="px-3 py-2 text-left text-xs font-semibold">Email</th>
+                        <th className="px-3 py-2 text-left text-xs font-semibold">Telefono</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          )}
+                    </thead>
+                    <tbody>
+                      {sortedTeamBody.map((contact, idx) => (
+                        <tr key={idx} className="border-t border-gray-200">
+                          <td className="px-3 py-2">{contact.department}</td>
+                          <td className="px-3 py-2">{contact.role}</td>
+                          <td className="px-3 py-2 font-medium">{contact.name}</td>
+                          <td className="px-3 py-2">{contact.email}</td>
+                          <td className="px-3 py-2">{contact.phone}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            );
+          })()}
 
           {/* Specifiche Funzionalità - Feature Specifications */}
           {features && features.length > 0 && (
-            <section className="mb-6 print-page-break-before">
+            <section className="mb-6">
               <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-purple-500 pb-2 flex items-center">
                 <FileText className="w-5 h-5 mr-2" />
                 Specifiche Funzionalità
@@ -727,9 +723,55 @@ const StatusReport = ({ projectId, onClose }) => {
             </section>
           )}
 
+          {/* Osservazioni, Note e Criticità */}
+          {(project.osservazioni_note || project.azioni_correttive || (criticalities && criticalities.length > 0)) && (
+            <section className="mb-6">
+              <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-orange-500 pb-2 flex items-center">
+                <AlertTriangle className="w-5 h-5 mr-2" />
+                Osservazioni, Note e Criticità
+              </h3>
+              <div className="space-y-4">
+                {project.osservazioni_note && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                      Osservazioni / Note
+                    </h4>
+                    <div className="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                      {project.osservazioni_note}
+                    </div>
+                  </div>
+                )}
+                {project.azioni_correttive && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                      Azioni Correttive
+                    </h4>
+                    <div className="px-3 py-2 bg-amber-50 border border-amber-200 rounded text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                      {project.azioni_correttive}
+                    </div>
+                  </div>
+                )}
+                {criticalities && criticalities.length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-900 mb-2 pb-1 border-b border-slate-200">
+                      Criticità
+                    </h4>
+                    <ol className="space-y-1 list-decimal list-inside">
+                      {criticalities.map((c, idx) => (
+                        <li key={idx} className="px-3 py-1.5 bg-red-50 border border-red-200 rounded text-sm text-slate-700">
+                          {c.criticality_text}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
           {/* Knowledge Transfer Calendar - Compact Multi-Month View (same style as Calendario tab) */}
           {knowledgeSessions.length > 0 && (
-            <section className="mb-6 print-page-break-before">
+            <section className="mb-6 print:hidden">
               <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2 flex items-center">
                 <Calendar className="w-5 h-5 mr-2" />
                 Calendario Trasferimento Know-How
@@ -929,7 +971,7 @@ const StatusReport = ({ projectId, onClose }) => {
           )}
 
           {/* SECTION 2: Phase Breakdown - Matching Overview tab style */}
-          <section className="mb-6 print-page-break-before">
+          <section className="mb-6">
             <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2">
               Panoramica Processo Handover
             </h3>
@@ -1046,7 +1088,7 @@ const StatusReport = ({ projectId, onClose }) => {
           </section>
 
           {/* SECTION 3: Checklist Details */}
-          <section className="mb-6 print-page-break-before">
+          <section className="mb-6">
             <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2">
               Dettaglio Stato Checklist
             </h3>
@@ -1101,7 +1143,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
           {/* SECTION 4: Issues & Risks */}
           {issues.length > 0 && (
-            <section className="mb-6 print-page-break-before">
+            <section className="mb-6">
               <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2">
                 Problemi e Rischi
               </h3>
@@ -1144,7 +1186,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
           {/* SECTION 5: Attachments */}
           {attachments.length > 0 && (
-            <section className="mb-6 print-page-break-before">
+            <section className="mb-6">
               <h3 className="text-xl font-bold text-secondary-800 mb-3 border-b-2 border-blue-500 pb-2">
                 Allegati e Documentazione
               </h3>
@@ -1177,11 +1219,6 @@ const StatusReport = ({ projectId, onClose }) => {
             </section>
           )}
 
-          {/* Report Footer */}
-          <div className="mt-12 pt-6 border-t-2 border-gray-300 text-center text-sm text-secondary-500">
-            <p>Fine del Report di Stato Handover</p>
-            <p className="mt-2">Generato da Handover Management System il {formatDate(new Date().toISOString())}</p>
-          </div>
         </div>
       </div>
 
@@ -1216,24 +1253,12 @@ const StatusReport = ({ projectId, onClose }) => {
             break-after: always !important;
           }
 
-          .print\\:min-h-screen {
-            min-height: 100vh !important;
-          }
-
           .print\\:flex {
             display: flex !important;
           }
 
           .print\\:flex-col {
             flex-direction: column !important;
-          }
-
-          .print\\:justify-center {
-            justify-content: center !important;
-          }
-
-          .print\\:items-center {
-            align-items: center !important;
           }
 
           /* Avoid page breaks inside elements */
@@ -1325,7 +1350,7 @@ const StatusReport = ({ projectId, onClose }) => {
 
           /* Better page margins */
           @page {
-            margin: 1cm;
+            margin: 1.5cm 2.5cm;
           }
         }
       `}} />
