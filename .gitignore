@@ -7,3 +7,9 @@ node_modules
 backend/.env
 .env
 
+backend/database/database/handover.db
+backend/database/handover.db
+backend/database/handover.db
+backend/database/handover.db
+backend/database/handover.db
+/backend/database
